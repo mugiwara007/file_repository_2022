@@ -1,0 +1,44 @@
+body,
+html {
+  background-image: linear-gradient(
+    rgb(255, 255, 255),
+    rgb(18, 190, 202),
+    rgb(255, 255, 255)
+  );
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+}
+.container-fluid {
+  background-color: rgb(182, 255, 255);
+  padding-bottom: 0.5em;
+}
+.navbar {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.navbar-brand img {
+  width: 50px;
+}
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding-top: 12px;
+}
+.navbar-brand span {
+  color: #257573;
+}
+h2 {
+  text-transform: uppercase;
+}
+h2 span {
+  font-weight: bold;
+  color: white;
+}
+button {
+  margin-left: auto;
+}
+.nav-item a {
+  color: black;
+  font-weight: bold;
+}
