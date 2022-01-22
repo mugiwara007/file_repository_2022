@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="f-container">
+    <div class="box">
+      <div class="col">
+        <h4>Start Project</h4>
+        <p>We are ready for the challenge!</p>
+        <p>Adobexd@mail.com</p>
+      </div>
+      <div class="col">
+        <h4>Say Hello</h4>
+        <p>We are ready for the challenge!</p>
+        <p>Adobexd@mail.com</p>
+      </div>
+      <div class="col">
+        <h4>Jobs</h4>
+        <p>We are ready for the challenge!</p>
+        <p>Adobexd@mail.com</p>
+      </div>
+    </div>
+    <div class="box icons">
+      <div class="image">
+        <img src="{% static 'images/icons8_facebook_40px.png' %}" alt="">
+      </div>
+      <div class="image">
+        <img src="{% static 'images/icons8_instagram_40px.png' %}" alt="">
+      </div>
+      <div class="image">
+        <img src="{% static 'images/icons8_play_button_48px.png' %}" alt="">
+      </div>
+    </div>
+  </div>
+
+  {% block content %} 
+  {% endblock %}
+</body>
+</html>

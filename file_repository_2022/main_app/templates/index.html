@@ -1,4 +1,33 @@
+{% load static %}
 {% include 'base.html' %}
 {% block content %}
-<h1>Index</h1>
+<div class="container">
+    <div class="box">
+      <h2>Introducing <span>Flux<span></h2>
+      <h3>The leading platform for file repository</h3>
+    </div>
+    <div class="box login">
+      <div class="login-img">
+        <img src="{% static 'images/Image 1.png' %}" alt="">
+      </div>
+      <div id="myDIV" class="toggles">
+        <button class="btn active">User</button>
+        <button class="btn">Admin</button>
+      </div>
+      <div class="email">
+        <label for="pwd">Username or Email:</label>
+        <br>
+        <input type="email" id="user" name="pwd"> 
+      </div>
+      <div class="password">
+        <label for="pwd">Password:</label>
+        <br>
+        <input type="password" id="pwd" name="pwd"> 
+      </div>
+      <div class="btn-login">
+        <button>LOGIN</button>
+      </div>
+    </div>
+</div>
+{% include 'footer.html' %}
 {% endblock %}
