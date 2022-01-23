@@ -14,11 +14,11 @@
         <button class="btn active">User</button>
         <button class="btn">Admin</button>
       </div>
-      <form action="#">
+      <form action="{% url 'home' %}">
         <div class="email">
-          <label for="email">Username or Email:</label>
+          <label for="user-email">Username or Email:</label>
           <br>
-          <input type="email" id="user" name="email" required> 
+          <input type="text" id="user" name="user-email" required> 
         </div>
         <div class="password">
           <label for="pwd">Password:</label>
