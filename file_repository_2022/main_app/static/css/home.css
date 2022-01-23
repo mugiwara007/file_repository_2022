@@ -1,3 +1,5 @@
+/* INDEX AND BASE CSS */
+
 body,
 html {
   background-image: linear-gradient(
@@ -159,9 +161,10 @@ button {
 }
 .btn-login {
   width: 250px;
-  margin-top: 1em;
+  margin: auto;
+  margin-top: 0.7em;
 }
-.btn-login button {
+.btn-login input {
   width: 100%;
   background-color: #17252a;
   border: none;
@@ -207,4 +210,62 @@ button {
   .container .login .btn-login {
     width: 140px;
   }
+}
+
+/* REGISTER */
+.register-box {
+  background-color: rgb(204, 239, 255);
+  width: 420px;
+  height: 90vh;
+  margin: 3em auto;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1.5px black;
+  box-shadow: 5px 10px 8px #00000060;
+}
+.register-box .regs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 1em;
+}
+.register-box .regs label {
+  width: 155px;
+  font-size: 0.8rem;
+  background-color: #3aafa9;
+  text-align: center;
+  margin: 0;
+  padding: 8px;
+  color: white;
+}
+.register-box .regs input {
+  margin: 0;
+  width: 200px;
+  outline: none;
+  border: none;
+  font-size: 0.8rem;
+  padding: 0 15px;
+}
+.register-box .regs select {
+  margin: 0;
+  width: 200px;
+}
+.register-box h3 {
+  text-align: center;
+  padding: 5px;
+  font-size: 2.5rem;
+}
+.register-box .regs-btn {
+  text-align: center;
+}
+.register-box .regs-btn input {
+  width: 300px;
+  border: none;
+  padding: 10px 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: #17252a;
+  color: white;
 }

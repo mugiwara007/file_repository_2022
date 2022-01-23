@@ -14,19 +14,21 @@
         <button class="btn active">User</button>
         <button class="btn">Admin</button>
       </div>
-      <div class="email">
-        <label for="pwd">Username or Email:</label>
-        <br>
-        <input type="email" id="user" name="pwd"> 
-      </div>
-      <div class="password">
-        <label for="pwd">Password:</label>
-        <br>
-        <input type="password" id="pwd" name="pwd"> 
-      </div>
-      <div class="btn-login">
-        <button>LOGIN</button>
-      </div>
+      <form action="#">
+        <div class="email">
+          <label for="email">Username or Email:</label>
+          <br>
+          <input type="email" id="user" name="email" required> 
+        </div>
+        <div class="password">
+          <label for="pwd">Password:</label>
+          <br>
+          <input type="password" id="pwd" name="pwd"> 
+        </div>
+        <div class="btn-login">
+          <input type="submit" value="LOGIN">
+        </div>
+      </form> 
     </div>
 </div>
 {% include 'footer.html' %}
