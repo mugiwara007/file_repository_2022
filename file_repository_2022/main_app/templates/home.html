@@ -1,6 +1,60 @@
 {% load static %}
 {% include 'baseMain.html' %}
 {% block content %}
-<h1>hellow orld</h1>
+<div class="home-container">
+  <div class="side-bar">
+    <div class="profile">
+      <div class="image">
+        <img src="{% static 'images/user_profile.png' %}" alt="">
+      </div>
+      <h3>Admin</h3>
+    </div>
+    <ul id="myLIST" class="list">
+      <li class="li active">Files</li>
+      <li class="li">Archive</li>
+      <li class="li">Users</li>
+    </ul>
+  </div>
+  <div class="main-bar">
+    <div class="section upload">
+      <button class="upload-btn">+ Create User</button>
+    </div>
+    <div class="section fields">
+      <input type="text" placeholder="File Name" required>
+      <select name="category" required>
+        <option value="" disabled selected>Select your option</option>
+        <option value="pdf">pdf</option>
+        <option value="png">png</option>
+        <option value="jpeg">jpeg</option>
+        <option value="docs">docs</option>
+      </select>
+      <input type="date" placeholder="Date" required>
+      <button class="filter">Filter</button>
+    </div>
+    <div class="section search">
+      <input type="text" placeholder="Search">
+    </div>
+    <div class="section-table">
+      <table>
+        <tr>
+          <th>File Name</th>
+          <th>Category</th>
+          <th>Uploader</th>
+          <th>Date</th>
+          <th>Delete</th>
+          <th>Edit</th>
+        </tr>
+        <tr>
+          <td>File Name</td>
+          <td>File Category</td>
+          <td>File Uploader</td>
+          <td>Date Uploaded</td>
+          <td>img</td>
+          <td>img</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 {% include 'footer.html' %}
 {% endblock %}
