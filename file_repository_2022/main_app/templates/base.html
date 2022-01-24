@@ -21,23 +21,17 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'feed' %}">Feed</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'about' %}">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'explore' %}">Explore</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'blog' %}">Blog</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="">Contact</a>
           </li>
         </ul>
+        <a href="{% url 'index' %}">
+          <button type="button" class="btn btn-dark" style="margin-right: 5px;">Login</button>
+        </a> 
         <a href="{% url 'register' %}">
-          <button type="button" class="btn btn-dark">Sign Up</button>
+          <button type="button" class="btn btn-dark">Register</button>
         </a> 
       </div>
     </div>
