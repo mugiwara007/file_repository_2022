@@ -216,7 +216,7 @@ button {
 .register-box {
   background-color: rgb(204, 239, 255);
   width: 420px;
-  height: 95vh;
+  height: 600px;
   margin: 3em auto;
   border-radius: 5px;
   display: flex;

@@ -1,5 +1,5 @@
 {% load static %}
-{% include 'baseMain.html' %}
+{% include 'AdminBase.html' %}
 {% block content %}
 <div class="home-container">
   <div class="side-bar">
@@ -7,41 +7,41 @@
       <div class="image">
         <img src="{% static 'images/user_profile.png' %}" alt="">
       </div>
-      <h3>Admin</h3>
+      <h3>User</h3>
     </div>
     <ul id="myLIST" class="list">
       <li class="li active">Files</li>
       <li class="li">Archive</li>
-      <li class="li">Users</li>
     </ul>
   </div>
   <div class="main-bar">
     <div class="section upload">
-      <button class="upload-btn">+ Create User</button>
+      <button class="upload-btn">+ Upload</button>
     </div>
     <div class="section fields">
       <input type="text" placeholder="File Name" required>
       <select name="category" required>
         <option value="" disabled selected>Select your option</option>
-        <option value="pdf">pdf</option>
-        <option value="png">png</option>
-        <option value="jpeg">jpeg</option>
-        <option value="docs">docs</option>
+        <option value="pdf">Audio</option>
+        <option value="png">Video</option>
+        <option value="jpeg">Image</option>
+        <option value="docs">Text</option>
       </select>
+      <input type="text" placeholder="Uploader" required>
       <input type="date" placeholder="Date" required>
       <button class="filter">Filter</button>
     </div>
     <div class="section search">
       <input type="text" placeholder="Search">
     </div>
-    <div class="section-table" style="padding: 0 15px 0 15px;" >
+    <div class="section-table" style="margin: 0 25px 0 25px;" >
       <table class="table table-striped table-hover">
         <tr>
           <th>File Name</th>
           <th>Category</th>
           <th>Uploader</th>
           <th>Date</th>
-          <th>Delete</th>
+          <th>VIEW</th>
           <th>Edit</th>
         </tr>
         <tr>
@@ -49,8 +49,8 @@
           <td>File Category</td>
           <td>File Uploader</td>
           <td>Date Uploaded</td>
-          <td>img</td>
-          <td>img</td>
+          <td><button type="button" class="btn btn-success">VIEW</button></td>
+          <td><button type="button" class="btn btn-info">EDIT</button></td>
         </tr>
       </table>
     </div>
