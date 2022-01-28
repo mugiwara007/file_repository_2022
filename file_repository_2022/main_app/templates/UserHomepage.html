@@ -5,13 +5,13 @@
   <div class="side-bar">
     <div class="profile">
       <div class="image">
-        <img src="{% static 'images/user_profile.png' %}" alt="">
+        <a href="{% url 'UserProfile' %}"><img src="{% static 'images/user_profile.png' %}" alt=""></a>
       </div>
       <h3>User</h3>
     </div>
     <ul id="myLIST" class="list">
-      <li class="li active">Files</li>
-      <li class="li">Archive</li>
+      <a id="UserFiles" href="{% url 'UserHomepage' %}"><li class="li active">Files</li></a>
+      <a id="UserArchive" href="{% url 'UserArchive' %}"><li class="li">Archive</li></a>
     </ul>
   </div>
   <div class="main-bar">
@@ -42,7 +42,8 @@
           <th>Uploader</th>
           <th>Date</th>
           <th>VIEW</th>
-          <th>Edit</th>
+          <th>ARCHIVE</th>
+          <th>EDIT</th>
         </tr>
         <tr>
           <td>File Name</td>
@@ -50,6 +51,7 @@
           <td>File Uploader</td>
           <td>Date Uploaded</td>
           <td><button type="button" class="btn btn-success">VIEW</button></td>
+          <td><button type="button" class="btn btn-warning">ARCHIVE</button></td>
           <td><button type="button" class="btn btn-info">EDIT</button></td>
         </tr>
       </table>

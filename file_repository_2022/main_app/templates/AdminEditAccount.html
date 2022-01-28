@@ -1,0 +1,31 @@
+{% load static %}
+{% include 'AdminBase.html' %}
+{% block content %}
+<div class="AdminEditAccount-box">
+    <form action="#">
+        <div class="ChangeUserProfile">
+            <img src="{% static 'images/user_profile.png' %}" alt="">
+        </div>
+        <div class="ChangePassLabel">
+            <h3>EDIT ADMIN ACCOUNT</h3>
+        </div>
+        <div class="EditAdminAccountInfo">
+            <label for="userName">USERNAME</label>
+            <input placeholder="New Admin Username" type="text" id="NewAdminUsername" name="NewUserUsername" required>
+        </div>
+        <div class="EditAdminAccountInfo">
+            <label for="userName">EMAIL</label>
+            <input placeholder="New Admin Email" type="email" id="NewAdminEmail" name="NewUserEmail" required>
+        </div>
+        <div class="EditAdminAccountInfo">
+            <label for="userName">PASSWORD</label>
+            <input placeholder="Admin Password" type="password" id="AdminPassword" name="UserPassword" required>
+        </div>
+        <div class="AdminEditAccountButtons">
+            <button type="button" class="btn btn-primary">SAVE CHANGES</button>
+            <a href="{% url 'AdminProfile' %}"><button type="button" class="btn btn-primary">CANCEL</button></a>
+        </div>
+    </form>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

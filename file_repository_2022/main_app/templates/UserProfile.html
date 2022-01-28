@@ -1,0 +1,32 @@
+{% load static %}
+{% include 'AdminBase.html' %}
+{% block content %}
+<div class="UserProfile-box">
+    <form action="#">
+        <div class="ProfileImage">
+            <img src="{% static 'images/user_profile.png' %}" alt="">
+        </div>
+        <div class="UserInfo">
+            <label for="userNameLabel">USERNAME :</label>
+            <p>UserName</p>
+        </div>
+        <div class="UserInfo">
+            <label for="emailLabel">EMAIL :</label>
+            <p>Email</p>
+        </div>
+        <div class="UserProfileButtons">
+            <button type="button" class="btn btn-danger">DELETE ACCOUNT</button>
+        </div>
+        <div class="UserProfileButtons">
+            <a href="{% url 'UserEditAccount' %}"><button type="button" class="btn btn-primary">EDIT ACCOUNT</button></a>
+        </div>
+        <div class="UserProfileButtons">
+            <a href="{% url 'UserChangePassword' %}"><button type="button" class="btn btn-primary">CHANGE PASSWORD</button></a>
+        </div>
+        <div class="UserProfileButtons">
+            <a href="{% url 'UserHomepage' %}"><button type="button" class="btn btn-primary">CANCEL</button></a>
+        </div>
+    </form>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

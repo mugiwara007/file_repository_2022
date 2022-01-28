@@ -5,20 +5,16 @@
   <div class="side-bar">
     <div class="profile">
       <div class="image">
-        <a href="{% url 'AdminProfile' %}"><img src="{% static 'images/user_profile.png' %}" alt=""></a>
+        <a href="{% url 'UserProfile' %}"><img src="{% static 'images/user_profile.png' %}" alt=""></a>
       </div>
-      <h3>Admin</h3>
+      <h3>User</h3>
     </div>
     <ul id="myLIST" class="list">
-      <li class="li active">Files</li>
-      <li class="li">Archive</li>
-      <li class="li">Users</li>
+      <a id="UserFiles" href="{% url 'UserHomepage' %}"><li class="li">Files</li></a>
+      <a id="UserArchive" href="{% url 'UserArchive' %}"><li class="li active">Archive</li></a>
     </ul>
   </div>
   <div class="main-bar">
-    <div class="section upload">
-      <button class="upload-btn">+ Upload</button>
-    </div>
     <div class="section fields">
       <input type="text" placeholder="File Name" required>
       <select name="category" required>
@@ -42,20 +38,18 @@
           <th>Category</th>
           <th>Uploader</th>
           <th>Date</th>
-          <th>Delete</th>
-          <th>Edit</th>
+          <th>RESTORE FILE</th>
         </tr>
         <tr>
           <td>File Name</td>
           <td>File Category</td>
           <td>File Uploader</td>
           <td>Date Uploaded</td>
-          <td><button type="button" class="btn btn-danger">DELETE</button></td>
-          <td><button type="button" class="btn btn-info">EDIT</button></td>
+          <td><button type="button" class="btn btn-info">RESTORE</button></td>
         </tr>
       </table>
     </div>
   </div>
 </div>
 {% include 'footer.html' %}
-{% endblock %}
+{% endblock %}  
