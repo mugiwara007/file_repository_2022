@@ -35,4 +35,10 @@ def AdminEditAccount(request):
 
 def AdminChangePassword(request):
     return render(request, 'AdminChangePassword.html')
+
+def AdminArchive(request):
+    return render(request, 'AdminArchive.html')
+
+def AdminUserTab(request):
+    return render(request, 'AdminUserTab.html')
     

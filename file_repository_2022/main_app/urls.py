@@ -14,4 +14,6 @@ urlpatterns = [
     path('AdminProfile/', views.AdminProfile, name='AdminProfile'),
     path('AdminEditAccount/', views.AdminEditAccount, name='AdminEditAccount'),
     path('AdminChangePassword/', views.AdminChangePassword, name='AdminChangePassword'),
+    path('AdminArchive/', views.AdminArchive, name='AdminArchive'),
+    path('AdminUserTab/', views.AdminUserTab, name='AdminUserTab'),
 ]

@@ -915,3 +915,11 @@ select {
   box-sizing: border-box;
   border-radius: 8px;
 }
+
+#AdminArchive,
+#AdminFiles,
+#AdminUserTab
+{
+  text-decoration: none;
+  color:black;
+}
