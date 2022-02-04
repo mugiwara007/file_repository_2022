@@ -41,4 +41,13 @@ def AdminArchive(request):
 
 def AdminUserTab(request):
     return render(request, 'AdminUserTab.html')
+
+def AdminFileArchive(request):
+    return render(request, 'AdminFileArchive.html')
+
+def AdminCreateUser(request):
+    return render(request, 'AdminCreateUser.html')
+
+def AdminEditUser(request):
+    return render(request, 'AdminEditUser.html')
     

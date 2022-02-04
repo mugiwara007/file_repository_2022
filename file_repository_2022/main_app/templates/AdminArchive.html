@@ -11,20 +11,14 @@
     </div>
     <ul id="myLIST" class="list">
         <a id="AdminFiles" href="{% url 'AdminHomepage' %}"><li class="li">Files</li></a>
-        <a id="AdminArchive" href="{% url 'AdminArchive' %}"><li class="li active">Archive</li></a>
+        <a id="AdminFiles" href="{% url 'AdminFileArchive' %}"><li class="li">File Archive</li></a>
         <a id="AdminUserTab" href="{% url 'AdminUserTab' %}"><li class="li">Users</li></a>
+        <a id="AdminArchive" href="{% url 'AdminArchive' %}"><li class="li active">Account Archive</li></a>
     </ul>
   </div>
   <div class="main-bar">
     <div class="section fields">
       <input type="text" placeholder="File Name" required>
-      <select name="category" required>
-        <option value="" disabled selected>Select your option</option>
-        <option value="pdf">Audio</option>
-        <option value="png">Video</option>
-        <option value="jpeg">Image</option>
-        <option value="docs">Text</option>
-      </select>
       <input type="text" placeholder="Uploader" required>
       <input type="date" placeholder="Date" required>
       <button class="filter">Filter</button>
@@ -36,17 +30,13 @@
       <table class="table table-striped table-hover">
         <tr>
           <th>List of Users</th>
-          <th>Category</th>
-          <th>Date</th>
-          <th>DELETE FILE</th>
-          <th>EDIT FILE</th>
+          <th>Date Created</th>
+          <th>DELETE USER ACCOUNT</th>
         </tr>
         <tr>
           <td>UserName</td>
-          <td>File Category</td>
-          <td>Date Uploaded</td>
+          <td>Date Created</td>
           <td><button type="button" class="btn btn-danger">DELETE</button></td>
-          <td><button type="button" class="btn btn-primary">EDIT</button></td>
         </tr>
       </table>
     </div>

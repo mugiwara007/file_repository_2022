@@ -1,0 +1,47 @@
+{% load static %}
+{% include 'AdminBase.html' %}
+{% block content %}
+<div class="register-box">
+  <form action="#">
+    <h3>CREATE USER</h3>
+    <div class="regs">
+      <label for="userName">USERNAME</label>
+      <input type="text" id="User" name="userName" required>
+    </div>
+    <div class="regs">
+      <label for="email">E-MAIL</label>
+      <input type="email" id="Email" name="email" required>
+    </div>
+    <div class="regs hide-show">
+      <label for="password">PASSWORD</label>
+      <input type="password" id="Pass" name="password" required>
+      <i class="far fa-eye" id="togglePassword2"></i> 
+    </div>
+    <div class="regs hide-show">
+      <label for="c-password">CONFIRM PASSWORD</label>
+      <input type="password" id="CPass" name="c-password" required>
+      <i class="far fa-eye" id="togglePassword3"></i> 
+    </div>
+    <div class="regs">
+      <label for="SQuestion">SECURITY QUESTION</label>
+      <select name="SQuestion" id="SQuestion" required>
+        <option value="" disabled selected>Choose a question</option>
+        <option value="Q1">Who is your favorite artist?</option>
+        <option value="Q2">What is the name of your first pet?</option>
+        <option value="Q3">What is your favorite car?</option>
+      </select>
+    </div>
+    <div class="regs">
+      <label for="SAnswer">SECURITY ANSWER</label>
+      <input type="text" id="SAns" name="SAnswer" required>
+    </div>
+    <div class="regs-btn">
+      <button type="button" class="btn btn-secondary">CREATE USER</button>
+      <a href="{% url 'AdminUserTab' %}">
+        <button type="button" class="btn btn-primary">CANCEL</button>
+      </a>
+    </div>
+  </form>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

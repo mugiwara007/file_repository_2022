@@ -880,3 +880,62 @@ select {
   margin-top: 7px;
   z-index: 999;
 }
+
+/* FILE UPLOAD */
+.AdminEditAccount-box .FileUploadAdmin
+{
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.AdminEditAccount-box .AdminPFPBtn 
+{
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.AdminEditAccount-box input[type=file] {
+  font-size: 70px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+/* USER */
+.UserEditAccount-box .FileUploadUser
+{
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.UserEditAccount-box .UserPFPBtn 
+{
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.UserEditAccount-box input[type=file] {
+  font-size: 70px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+

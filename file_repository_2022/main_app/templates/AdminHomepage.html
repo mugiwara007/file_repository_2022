@@ -10,23 +10,24 @@
       <h3>Admin</h3>
     </div>
     <ul id="myLIST" class="list">
-      <a id="AdminFiles" href="{% url 'AdminHomepage' %}"><li class="li active">Files</li></a>
-      <a id="AdminArchive" href="{% url 'AdminArchive' %}"><li class="li">Archive</li></a>
+        <a id="AdminFiles" href="{% url 'AdminHomepage' %}"><li class="li active">Files</li></a>
+        <a id="AdminFiles" href="{% url 'AdminFileArchive' %}"><li class="li">File Archive</li></a>
         <a id="AdminUserTab" href="{% url 'AdminUserTab' %}"><li class="li">Users</li></a>
+        <a id="AdminArchive" href="{% url 'AdminArchive' %}"><li class="li">Account Archive</li></a>
     </ul>
   </div>
   <div class="main-bar">
     <div class="section upload">
-      <button class="upload-btn">+ Upload</button>
+      <button type="button" class="upload-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Upload</button>
     </div>
     <div class="section fields">
       <input type="text" placeholder="File Name" required>
       <select name="category" required>
-        <option value="" disabled selected>Select your option</option>
-        <option value="pdf">Audio</option>
-        <option value="png">Video</option>
-        <option value="jpeg">Image</option>
-        <option value="docs">Text</option>
+        <option value="" disabled selected>Select file category</option>
+        <option value="Audio">Audio</option>
+        <option value="Video">Video</option>
+        <option value="Image">Image</option>
+        <option value="Text">Text</option>
       </select>
       <input type="text" placeholder="Uploader" required>
       <input type="date" placeholder="Date" required>
@@ -42,8 +43,8 @@
           <th>Category</th>
           <th>Uploader</th>
           <th>Date</th>
-          <th>Delete</th>
-          <th>Edit</th>
+          <th>ARCHIVE FILE</th>
+          <th>EDIT FILE</th>
         </tr>
         <tr>
           <td>File Name</td>
@@ -51,9 +52,50 @@
           <td>File Uploader</td>
           <td>Date Uploaded</td>
           <td><button type="button" class="btn btn-danger">DELETE</button></td>
-          <td><button type="button" class="btn btn-info">EDIT</button></td>
+          <td><button type="button" class="btn btn-info" >EDIT</button></td>
         </tr>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Upload-->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Upload a file/Document</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-2">
+          <div class="col-md">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="floatingInputGrid" placeholder="File Name">
+              <label for="floatingInputGrid">File Name</label>
+            </div>
+          </div>
+          <div class="col-md" style="margin-bottom: 10px;">
+            <div class="form-floating">
+              <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
+                <option selected>Choose a file category</option>
+                <option value="Audio">Audio</option>
+                <option value="Video">Video</option>
+                <option value="Image">Image</option>
+                <option value="Text">Text</option>
+              </select>
+              <label for="floatingSelectGrid">File Category</label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <input class="form-control" type="file" id="formFile">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Upload</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
