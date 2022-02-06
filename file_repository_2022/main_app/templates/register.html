@@ -2,7 +2,8 @@
 {% include 'baseRegister.html' %}
 {% block content %}
 <div class="register-box">
-  <form action="#">
+  <form action="#" method="post">
+    {% csrf_token %}
     <h3>REGISTER</h3>
     <div class="regs">
       <label for="userName">USERNAME</label>

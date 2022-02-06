@@ -13,3 +13,12 @@ for (var i = 0; i < btnList.length; i++) {
     this.className += " active";
   });
 }
+
+function userClick(){
+  document.getElementById('user-type').value = "User";
+  console.log(document.getElementById('user-type').value);
+}
+function adminClick(){
+  document.getElementById('user-type').value = "Admin";
+  console.log(document.getElementById('user-type').value);
+}

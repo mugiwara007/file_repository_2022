@@ -21,9 +21,12 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
         </ul>
-        <a href="{% url 'index' %}">
-          <button type="button" class="btn btn-dark">LOG OUT</button>
-        </a> 
+        <form action="{% url 'index' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="Logged-out" value="user-logged-out">
+          <button type="submit" class="btn btn-dark">LOG OUT</button>
+        </form>
+
       </div>
     </div>
   </nav>

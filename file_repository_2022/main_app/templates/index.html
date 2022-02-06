@@ -11,10 +11,12 @@
         <img src="{% static 'images/Image 1.png' %}" alt="">
       </div>
       <div id="myDIV" class="toggles">
-        <button class="btn active">User</button>
-        <button class="btn">Admin</button>
+        <button class="btn active" onclick='userClick()'>User</button>
+        <button class="btn" onclick='adminClick()'>Admin</button>
       </div>
-      <form action="{% url 'index' %}">
+      <form action="{% url 'index' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" id="user-type" name="user-type" value="User">
         <div class="email">
           <label for="user-email">Username or Email:</label>
           <br>
@@ -32,5 +34,6 @@
       </form> 
     </div>
 </div>
+<script src="{% static 'js/home.js' %}"></script>
 {% include 'footer.html' %}
 {% endblock %}
