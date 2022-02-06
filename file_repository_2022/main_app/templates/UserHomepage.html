@@ -5,9 +5,9 @@
   <div class="side-bar">
     <div class="profile">
       <div class="image">
-        <a href="{% url 'UserProfile' %}"><img src="{% static 'images/user_profile.png' %}" alt=""></a>
+        <a href="{% url 'UserProfile' %}"><img src="{% static 'images/' %}{{profile_picture}}" alt=""></a>
       </div>
-      <h3>User</h3>
+      <h3>User {{username}}</h3>
     </div>
     <ul id="myLIST" class="list">
       <a id="UserFiles" href="{% url 'UserHomepage' %}"><li class="li active">Files</li></a>

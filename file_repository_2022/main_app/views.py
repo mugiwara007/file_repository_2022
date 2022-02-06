@@ -1,5 +1,6 @@
 import email
 from multiprocessing import context
+from typing import Dict
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -60,15 +61,16 @@ def register(request):
     return render(request, 'register.html')
 
 def AdminHomepage(request):
-    return render(request, 'AdminHomepage.html')
+    #Check if Logged in
+    # if('logged_email' not in request.session):
+    #     return render(request, 'index.html')
+    # found = Profiles.objects.get(id=request.session['logged_id'])
+    context = CheckLoggedIn(request)
+    return render(request, 'AdminHomepage.html',context)
 
 def UserHomepage(request):
-    #Check if Logged in
-    if('logged_email' not in request.session):
-        return render(request, 'index.html')
-
-
-    return render(request, 'UserHomepage.html')
+    context = CheckLoggedIn(request)
+    return render(request, 'UserHomepage.html',context)
 
 def UserProfile(request):
     try:
@@ -79,7 +81,19 @@ def UserProfile(request):
     return render(request, 'UserProfile.html',context)
 
 def UserChangePassword(request):
-    return render(request, 'UserChangePassword.html')
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    found = Profiles.objects.get(id=request.session['logged_id'])
+
+    if request.method == 'POST':
+        if request.POST['CurrentPass'] == found.password and request.POST['NewPass'] == request.POST['CNewPass']:
+            found.password = request.POST['NewPass']
+            found.save()
+        else:
+            #insert alert
+            pass
+    context = {'picture':found.profile_picture}
+    return render(request, 'UserChangePassword.html',context)
 
 def UserEditAccount(request):
     try:
@@ -110,7 +124,8 @@ def UserEditAccount(request):
     return render(request, 'UserEditAccount.html',context)
 
 def UserArchive(request):
-    return render(request, 'UserArchive.html')
+    context = CheckLoggedIn(request)
+    return render(request, 'UserArchive.html',context)
 
 def AdminProfile(request):
     return render(request, 'AdminProfile.html')
@@ -122,16 +137,29 @@ def AdminChangePassword(request):
     return render(request, 'AdminChangePassword.html')
 
 def AdminArchive(request):
-    return render(request, 'AdminArchive.html')
+    context = CheckLoggedIn(request)
+    return render(request, 'AdminArchive.html', context)
 
 def AdminUserTab(request):
-    return render(request, 'AdminUserTab.html')
+    context = CheckLoggedIn(request)
+    return render(request, 'AdminUserTab.html', context)
 
 def AdminFileArchive(request):
-    return render(request, 'AdminFileArchive.html')
+    context = CheckLoggedIn(request)
+    return render(request, 'AdminFileArchive.html', context)
 
 def AdminCreateUser(request):
     return render(request, 'AdminCreateUser.html')
 
 def AdminEditUser(request):
     return render(request, 'AdminEditUser.html')
+
+
+
+def CheckLoggedIn(request) -> Dict:
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    allContext = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
+    return allContext
