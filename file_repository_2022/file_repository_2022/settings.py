@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -115,13 +116,21 @@ USE_L10N = True
 USE_TZ = True
 
 # this is the statics files context path when request the static file in url. for example http://127.0.0.1:8000/static/js/jquery-3.3.1.min.js
-STATIC_URL = '/static/'
 
+STATIC_URL = 'static/'
+MEDIA_URL = '/images/'
 # this is the static files folder name which you created in django project root folder. This is different from above STATIC_URL.
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'main_app/static'),
 ]
 
+MEDIA_ROOT=[
+    os.path.join(BASE_DIR, 'main_app/static/images')
+]
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'main_app/static/images')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

@@ -2,31 +2,32 @@
 {% include 'AdminBase.html' %}
 {% block content %}
 <div class="UserEditAccount-box">
-    <form action="#">
+    <form autocomplete="off" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="ChangeUserProfile">
-            <img src="{% static 'images/user_profile.png' %}" alt="">
+            <img id="profile-picture" src="{% static '/images/' %}{{picture}}" alt="">
         </div>
         <div class="FileUploadUser">
             <button class="UserPFPBtn">Upload a file</button>
-            <input type="file" name="UserPFP" />
+            <input type="file" name="UserPFP" accept="image/png, image/gif, image/jpeg" onchange="document.getElementById('profile-picture').src = window.URL.createObjectURL(this.files[0])"/>
         </div>
         <div class="ChangePassLabel">
             <h3>EDIT ACCOUNT</h3>
         </div>
         <div class="EditAccountInfo">
             <label for="userName">USERNAME</label>
-            <input placeholder="New Username" type="text" id="NewUserUsername" name="NewUserUsername" required>
+            <input placeholder="New Username" type="text" id="NewUserUsername" name="NewUserUsername"required value="{{username}}"> 
         </div>
         <div class="EditAccountInfo">
             <label for="userName">EMAIL</label>
-            <input placeholder="New Email" type="email" id="NewUserEmail" name="NewUserEmail" required>
+            <input placeholder="New Email" type="email" id="NewUserEmail" name="NewUserEmail" value="{{email}}"required>
         </div>
         <div class="EditAccountInfo">
             <label for="userName">PASSWORD</label>
             <input placeholder="Password" type="password" id="UserPassword" name="UserPassword" required>
         </div>
         <div class="UserEditAccountButtons">
-            <button type="button" class="btn btn-primary">SAVE CHANGES</button>
+            <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
             <a href="{% url 'UserProfile' %}"><button type="button" class="btn btn-primary">CANCEL</button></a>
         </div>
     </form>
