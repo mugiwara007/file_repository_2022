@@ -1,5 +1,4 @@
 from email.policy import default
-import uuid
 from django.db import models
 
 class Profiles(models.Model):

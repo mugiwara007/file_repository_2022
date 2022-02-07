@@ -1,9 +1,8 @@
 import email
 from multiprocessing import context
 from typing import Dict
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from main_app.models import Profiles
 # Create your views here.
 
@@ -61,16 +60,22 @@ def register(request):
     return render(request, 'register.html')
 
 def AdminHomepage(request):
-    #Check if Logged in
-    # if('logged_email' not in request.session):
-    #     return render(request, 'index.html')
-    # found = Profiles.objects.get(id=request.session['logged_id'])
-    context = CheckLoggedIn(request)
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
+
     return render(request, 'AdminHomepage.html',context)
 
 def UserHomepage(request):
-    context = CheckLoggedIn(request)
-    return render(request, 'UserHomepage.html',context)
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    else:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+        context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
+
+        return render(request, 'UserHomepage.html',context)
+    
 
 def UserProfile(request):
     try:
@@ -124,28 +129,59 @@ def UserEditAccount(request):
     return render(request, 'UserEditAccount.html',context)
 
 def UserArchive(request):
-    context = CheckLoggedIn(request)
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'UserArchive.html',context)
 
 def AdminProfile(request):
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'AdminProfile.html')
 
 def AdminEditAccount(request):
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'AdminEditAccount.html')
 
 def AdminChangePassword(request):
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'AdminChangePassword.html')
 
 def AdminArchive(request):
-    context = CheckLoggedIn(request)
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'AdminArchive.html', context)
 
 def AdminUserTab(request):
-    context = CheckLoggedIn(request)
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'AdminUserTab.html', context)
 
 def AdminFileArchive(request):
-    context = CheckLoggedIn(request)
+    if('logged_email' not in request.session):
+        return render(request, 'index.html')
+    user = Profiles.objects.get(id=request.session['logged_id'])
+
+    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
     return render(request, 'AdminFileArchive.html', context)
 
 def AdminCreateUser(request):
@@ -155,11 +191,3 @@ def AdminEditUser(request):
     return render(request, 'AdminEditUser.html')
 
 
-
-def CheckLoggedIn(request) -> Dict:
-    if('logged_email' not in request.session):
-        return render(request, 'index.html')
-    user = Profiles.objects.get(id=request.session['logged_id'])
-
-    allContext = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
-    return allContext

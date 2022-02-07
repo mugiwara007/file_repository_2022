@@ -129,7 +129,7 @@ MEDIA_ROOT=[
 ]
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'main_app/static/images')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'main_app/static/images/profile_pictures')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

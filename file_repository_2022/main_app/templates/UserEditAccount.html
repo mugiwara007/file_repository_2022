@@ -5,7 +5,7 @@
     <form autocomplete="off" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="ChangeUserProfile">
-            <img id="profile-picture" src="{% static '/images/' %}{{picture}}" alt="">
+            <img id="profile-picture" src="{% static '/images/profile_pictures/' %}{{picture}}" alt="">
         </div>
         <div class="FileUploadUser">
             <button class="UserPFPBtn">Upload a file</button>
