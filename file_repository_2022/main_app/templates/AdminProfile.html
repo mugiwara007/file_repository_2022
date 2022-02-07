@@ -4,16 +4,16 @@
 <div class="AdminProfile-box">
     <form action="#">
         <div class="AdminProfileImage">
-            <img src="{% static 'images/user_profile.png' %}" alt="">
+            <img src="{% static 'images/profile_pictures/' %}{{profile_picture}}" alt="">
         </div>
         <h3>ADMIN</h3>
         <div class="AdminInfo">
             <label for="userNameLabel"> ADMIN USERNAME :</label>
-            <p>ADMIN USERNAME</p>
+            <p>{{username}}</p>
         </div>
         <div class="AdminInfo">
             <label for="emailLabel">ADMIN EMAIL :</label>
-            <p>ADMIN EMAIL</p>
+            <p>{{email}}</p>
         </div>
         <div class="AdminProfileButtons">
             <a href="{% url 'AdminEditAccount' %}"><button type="button" class="btn btn-primary">EDIT ACCOUNT</button></a>

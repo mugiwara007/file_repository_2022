@@ -2,31 +2,32 @@
 {% include 'AdminBase.html' %}
 {% block content %}
 <div class="AdminEditAccount-box">
-    <form action="#">
+    <form autocomplete="off" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="ChangeUserProfile">
-            <img src="{% static 'images/user_profile.png' %}" alt="">
+            <img id="profile-picture" src="{% static 'images/profile_pictures/' %}{{profile_picture}}" alt="">
         </div>
         <div class="FileUploadAdmin">
             <button class="AdminPFPBtn">Upload a file</button>
-            <input type="file" name="AdminPFP" />
+            <input type="file" name="AdminPFP" accept="image/png, image/gif, image/jpeg" onchange="document.getElementById('profile-picture').src = window.URL.createObjectURL(this.files[0])"/>
         </div>
         <div class="ChangePassLabel">
             <h3>EDIT ADMIN ACCOUNT</h3>
         </div>
         <div class="EditAdminAccountInfo">
             <label for="userName">USERNAME</label>
-            <input placeholder="New Admin Username" type="text" id="NewAdminUsername" name="NewUserUsername" required>
+            <input placeholder="New Admin Username" type="text" id="NewAdminUsername" name="NewUserUsername" value="{{username}}" required>
         </div>
         <div class="EditAdminAccountInfo">
             <label for="userName">EMAIL</label>
-            <input placeholder="New Admin Email" type="email" id="NewAdminEmail" name="NewUserEmail" required>
+            <input placeholder="New Admin Email" type="email" id="NewAdminEmail" name="NewUserEmail" value="{{email}}"required>
         </div>
         <div class="EditAdminAccountInfo">
             <label for="userName">PASSWORD</label>
             <input placeholder="Admin Password" type="password" id="AdminPassword" name="UserPassword" required>
         </div>
         <div class="AdminEditAccountButtons">
-            <button type="button" class="btn btn-primary">SAVE CHANGES</button>
+            <button type="submit" class="btn btn-primary">SAVE CHANGES</button>
             <a href="{% url 'AdminProfile' %}"><button type="button" class="btn btn-primary">CANCEL</button></a>
         </div>
     </form>
