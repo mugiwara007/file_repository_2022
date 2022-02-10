@@ -19,4 +19,7 @@ urlpatterns = [
     path('AdminFileArchive/', views.AdminFileArchive, name='AdminFileArchive'),
     path('AdminCreateUser/', views.AdminCreateUser, name='AdminCreateUser'),
     path('AdminEditUser/', views.AdminEditUser, name='AdminEditUser'),
+    
+    path('uploadFile/', views.uploadFile, name='uploadFile'),
+    
 ]

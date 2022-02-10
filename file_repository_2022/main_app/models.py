@@ -13,3 +13,10 @@ class Profiles(models.Model):
 
     def __str__(self):
         return self.username
+
+class UploadedFile(models.Model):
+    file = models.FileField()
+    file_name = models.CharField(max_length=30, null=False, blank=False)
+    file_type = models.CharField(max_length=30, null=False, blank=False , default = 'file')
+    uploader = models.CharField(max_length=30, null=False, blank=False)
+    uploaded_date = models.CharField(max_length=30, null=False, blank=False , default = 'date')

@@ -45,15 +45,20 @@
           <th>ARCHIVE</th>
           <th>EDIT</th>
         </tr>
+        {% for file in files %}
         <tr>
-          <td>File Name</td>
-          <td>File Category</td>
-          <td>File Uploader</td>
-          <td>Date Uploaded</td>
-          <td><button type="button" class="btn btn-success">VIEW</button></td>
+          
+          
+          <td>{{file.file_name}}</td>
+          <td>{{file.file_type}}</td>
+          <td>{{file.uploader}}</td>
+          <td>{{file.uploaded_date}}</td>
+          <td><button type="button" class="btn btn-success"><a href="{{file.file.url}}" target="blank" style="text-decoration: none; color: black;">VIEW</a></button></td>
           <td><button type="button" class="btn btn-danger" onclick = "sweetalert()">DELETE</button></td>
           <td><button type="button" class="btn btn-info">EDIT</button></td>
+          
         </tr>
+        {% endfor %}
       </table>
     </div>
   </div>
@@ -67,35 +72,38 @@
         <h5 class="modal-title" id="staticBackdropLabel">Upload a file/Document</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <form action="/uploadFile/" method="post" enctype="multipart/form-data" id="upload_form">
+        {% csrf_token %}
       <div class="modal-body">
         <div class="row g-2">
           <div class="col-md">
             <div class="form-floating">
-              <input type="text" class="form-control" id="floatingInputGrid" placeholder="File Name">
+              <input type="text" class="form-control" name="file_name" id="floatingInputGrid" placeholder="File Name" required>
               <label for="floatingInputGrid">File Name</label>
             </div>
           </div>
           <div class="col-md" style="margin-bottom: 10px;">
             <div class="form-floating">
-              <select class="form-select" id="floatingSelectGrid" aria-label="Floating label select example">
-                <option selected>Choose a file category</option>
-                <option value="Audio">Audio</option>
-                <option value="Video">Video</option>
-                <option value="Image">Image</option>
-                <option value="Text">Text</option>
-              </select>
-              <label for="floatingSelectGrid">File Category</label>
+                  <select class="form-select" id="floatingSelectGrid" name="file_type" aria-label="Floating label select example" form="upload_form" required>
+                    <option selected>Choose a file category</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Video">Video</option>
+                    <option value="Image">Image</option>
+                    <option value="Text">Text</option>
+                  </select>
+                  <label for="floatingSelectGrid">File Category</label>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <input class="form-control" type="file" id="formFile" name="file" required>
             </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <input class="form-control" type="file" id="formFile">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Upload</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Upload</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+    </form>
     </div>
   </div>
 </div>

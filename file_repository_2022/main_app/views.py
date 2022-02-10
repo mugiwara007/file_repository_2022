@@ -4,6 +4,12 @@ from typing import Dict
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from main_app.models import Profiles
+from main_app.models import UploadedFile
+
+import datetime
+
+import pytz
+
 # Create your views here.
 
 
@@ -77,7 +83,11 @@ def UserHomepage(request):
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
 
-    context = {'username' : user.username,'email' : user.eMail,'profile_picture': user.profile_picture}
+    context = {
+        'username' : user.username,
+        'email' : user.eMail,'profile_picture': user.profile_picture,
+        'files':  UploadedFile.objects.all(),
+        }
     return render(request, 'UserHomepage.html',context)
     
 def UserProfile(request):
@@ -239,5 +249,19 @@ def AdminEditUser(request):
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage') 
     return render(request, 'AdminEditUser.html')
+
+def uploadFile(request):
+    if request.method == 'POST':
+        tz = pytz.timezone('Asia/Hong_Kong')
+        now = datetime.datetime.now(tz)
+        upload = UploadedFile(file = request.FILES['file'], 
+            file_name = request.POST.get('file_name'), 
+            file_type = request.POST.get('file_type'),
+            uploader = request.session['logged_username'],
+            uploaded_date = str(now))
+
+        upload.save()
+        
+        return redirect('UserHomepage')
 
 
