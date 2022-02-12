@@ -1,9 +1,11 @@
 
+from contextlib import redirect_stderr
 from multiprocessing import context
 from re import search
 from typing import Dict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
+from django.contrib import messages
 from main_app.models import Profiles
 from main_app.models import UploadedFile
 
@@ -32,6 +34,7 @@ def index(request):
             del request.session['logged_email']
             del request.session['logged_id']
             del request.session['logged_user_type']
+            return redirect('index')
         try:
             if "@" in request.POST['user-email']:
                 found = Profiles.objects.get(
@@ -49,7 +52,8 @@ def index(request):
                 request.session['logged_user_type'] = found.admin
                 return redirect('UserHomepage')
         except:
-            return render(request, 'index.html')
+            messages.error(request, "Invalid Username or Password")
+            return redirect('index')
 # Redirect to page if user did not log out properly
     if('logged_user_type' in request.session):
         if(request.session['logged_user_type'] == True):
@@ -61,18 +65,28 @@ def index(request):
 
 def register(request):
     if request.method == 'POST':
-        found = Profiles.objects.filter(
-            eMail=request.POST['email'], username=request.POST['userName'])
-        if(not found):
-            p = Profiles(username=request.POST['userName'],
+        try:
+            registerError=0
+            if(Profiles.objects.filter(eMail=request.POST['email'])):
+                messages.error(request, "Email already exist")
+                registerError+=1
+            if(Profiles.objects.filter(username=request.POST['userName'])):
+                messages.error(request, "Username already exist")
+                registerError+=1
+            if(request.POST['password'] != request.POST['c-password']):
+                messages.error(request, "Password does not match")
+                registerError+=1
+            if(registerError != 0):
+                return redirect('register')
+            else:
+                p = Profiles(username=request.POST['userName'],
                          eMail=request.POST['email'],
                          password=request.POST['password'],
                          security_question=request.POST['SQuestion'],
                          security_answer=request.POST['SAnswer'], )
-            p.save()
-            return render(request, 'index.html')
-        else:
-            # insert alert if register failed
+                p.save()
+                return render(request, 'index.html')
+        except:
             pass
     return render(request, 'register.html')
 
@@ -148,13 +162,20 @@ def UserChangePassword(request):
     found = Profiles.objects.get(id=request.session['logged_id'])
 
     if request.method == 'POST':
-        if request.POST['CurrentPass'] == found.password and request.POST['NewPass'] == request.POST['CNewPass']:
+        errorCount=0
+        if(found.password != request.POST['CurrentPass']):
+            messages.error(request,"Wrong Current Password")
+            errorCount+=1
+        if(request.POST['NewPass'] != request.POST['CNewPass']):
+            messages.error(request,"Password confirmation did not match")
+            errorCount+=1
+        if(errorCount==0):
             found.password = request.POST['NewPass']
             found.save()
             return redirect('UserProfile')
         else:
-            # insert alert
-            pass
+            return redirect('UserChangePassword')
+        
     context = {'picture': found.profile_picture}
     return render(request, 'UserChangePassword.html', context)
 
@@ -166,13 +187,21 @@ def UserEditAccount(request):
         return redirect('AdminHomepage')
     profile = Profiles.objects.get(id=request.session['logged_id'])
 
-    context = {'username': profile.username,
-               'email': profile.eMail, 'picture': profile.profile_picture}
 
     if request.method == 'POST':
+        errorCount = 0
+        if(Profiles.objects.filter(username=request.POST['NewUserUsername']) and profile.username != request.POST['NewUserUsername']):
+            messages.error(request,"New Username already taken")
+            errorCount+=1
+        if(Profiles.objects.filter(eMail=request.POST['NewUserEmail']) and profile.eMail != request.POST['NewUserEmail']):
+            messages.error(request,"New email already been used")
+            errorCount+=1
+        if(profile.password != request.POST['UserPassword']):
+            messages.error(request,"Wrong Password")
+            errorCount+=1
 
         # Data validation for existing accounts
-        if profile.password == request.POST['UserPassword']:
+        if(errorCount==0):
             profile.username = request.POST['NewUserUsername']
             profile.eMail = request.POST['NewUserEmail']
             profile.save()
@@ -183,6 +212,8 @@ def UserEditAccount(request):
             except:
                 pass
             return redirect('UserProfile')
+        
+        return redirect('UserEditAccount')
     context = {'username': profile.username,
                'email': profile.eMail, 'picture': profile.profile_picture}
     return render(request, 'UserEditAccount.html', context)
@@ -220,8 +251,19 @@ def AdminEditAccount(request):
     admin = Profiles.objects.get(id=request.session['logged_id'])
 
     if request.method == 'POST':
+        errorCount = 0
+        if(Profiles.objects.filter(username=request.POST['NewUserUsername']) and admin.username != request.POST['NewUserUsername']):
+            messages.error(request,"New Username already taken")
+            errorCount+=1
+        if(Profiles.objects.filter(eMail=request.POST['NewUserEmail']) and admin.eMail != request.POST['NewUserEmail']):
+            messages.error(request,"New email already been used")
+            errorCount+=1
+        if(admin.password != request.POST['UserPassword']):
+            messages.error(request,"Wrong Password")
+            errorCount+=1
+
         # Data validation for existing accounts
-        if admin.password == request.POST['UserPassword']:
+        if(errorCount==0):
             admin.username = request.POST['NewUserUsername']
             admin.eMail = request.POST['NewUserEmail']
             admin.save()
@@ -232,7 +274,8 @@ def AdminEditAccount(request):
             except:
                 pass
             return redirect('AdminProfile')
-
+        else:
+            return redirect('AdminEditAccount')
     context = {'username': admin.username, 'email': admin.eMail,
                'profile_picture': admin.profile_picture}
     return render(request, 'AdminEditAccount.html', context)
@@ -245,13 +288,21 @@ def AdminChangePassword(request):
         return redirect('UserHomepage')
     user = Profiles.objects.get(id=request.session['logged_id'])
     if request.method == 'POST':
-        if request.POST['CurrentPass'] == user.password and request.POST['NewPass'] == request.POST['CNewPass']:
+        errorCount=0
+        if(user.password != request.POST['CurrentPass']):
+            messages.error(request,"Wrong Current Password")
+            errorCount+=1
+        if(request.POST['NewPass'] != request.POST['CNewPass']):
+            messages.error(request,"Password confirmation did not match")
+            errorCount+=1
+
+
+        if(errorCount==0):
             user.password = request.POST['NewPass']
             user.save()
-            return redirect('UserProfile')
+            return redirect('AdminProfile')
         else:
-            # insert alert
-            pass
+            return redirect('AdminChangePassword')
 
     context = {'profile_picture': user.profile_picture}
     return render(request, 'AdminChangePassword.html', context)

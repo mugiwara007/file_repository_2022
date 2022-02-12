@@ -28,9 +28,19 @@
           <input type="password" id="id_password" name="pwd">
           <i class="far fa-eye" id="togglePassword"></i> 
         </div>
+
+ 
         <div class="btn-login">
           <input type="submit" value="LOGIN">
         </div>
+        {% if messages %}
+        {% for message in messages %}
+        <br>
+        <div class="alert alert-danger" role="alert" style="align-content: center;">
+          {{message}}
+        </div>
+        {% endfor %}
+        {% endif%}
       </form> 
     </div>
 </div>

@@ -1,11 +1,19 @@
 {% load static %}
 {% include 'baseRegister.html' %}
 {% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger text-center" role="alert" style="align-items: center;" id="alert">
+  {{message}}
+</div>
+{% endfor %}
+{% endif%}
 <div class="register-box">
+
   <form action="#" method="post">
     {% csrf_token %}
     <h3>REGISTER</h3>
-    <div class="regs">
+     <div class="regs">
       <label for="userName">USERNAME</label>
       <input type="text" id="User" name="userName" required>
     </div>
@@ -41,5 +49,6 @@
     </div>
   </form>
 </div>
+
 {% include 'footer.html' %}
 {% endblock %}

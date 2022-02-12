@@ -31,6 +31,13 @@ function sweetalert() {
     }
   })
 }
+function loginalert() {
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Ivalid Username or password'
+  })
+}
 
 function deleteaccountalert() {
   Swal.fire({
@@ -184,3 +191,4 @@ $('#admin_user_search').on('keyup', function (e) {
     },
   });
 });
+

@@ -1,6 +1,13 @@
 {% load static %}
 {% include 'AdminBase.html' %}
 {% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger text-center" role="alert" style="align-items: center;" id="alert">
+  {{message}}
+</div>
+{% endfor %}
+{% endif%}
 <div class="UserEditAccount-box">
     <form autocomplete="off" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
