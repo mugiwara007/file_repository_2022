@@ -31,10 +31,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
         </ul>
-        <form action="{% url 'index' %}" method="POST">
+        <form id="logoutform"action="{% url 'index' %}" method="POST">
           {% csrf_token %}
           <input type="hidden" name="Logged-out" value="user-logged-out">
-          <button type="submit" class="btn btn-dark">LOG OUT</button>
+          <button type="submit" id="formlogout"class="btn btn-dark">LOG OUT</button>
         </form>
 
       </div>

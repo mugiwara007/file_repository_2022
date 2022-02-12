@@ -192,3 +192,20 @@ $('#admin_user_search').on('keyup', function (e) {
   });
 });
 
+
+formlogout.addEventListener("click",function(event){
+  event.preventDefault();
+  Swal.fire({
+    title: 'Logout',
+    text: "Are you sure you want to logout?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      document.getElementById("logoutform").submit();
+    }
+  })
+})
