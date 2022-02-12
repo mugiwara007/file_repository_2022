@@ -5,13 +5,18 @@
   <div class="side-bar">
     <div class="profile">
       <div class="image">
-        <a href="{% url 'UserProfile' %}"><img src="{% static 'images/profile_pictures/' %}{{profile_picture}}" alt=""></a>
+        <a href="{% url 'UserProfile' %}"><img src="{% static 'images/profile_pictures/' %}{{profile_picture}}"
+            alt=""></a>
       </div>
       <h3>User {{username}}</h3>
     </div>
     <ul id="myLIST" class="list">
-      <a id="UserFiles" href="{% url 'UserHomepage' %}"><li class="li active">Files</li></a>
-      <a id="UserArchive" href="{% url 'UserArchive' %}"><li class="li">Archive</li></a>
+      <a id="UserFiles" href="{% url 'UserHomepage' %}">
+        <li class="li active">Files</li>
+      </a>
+      <a id="UserArchive" href="{% url 'UserArchive' %}">
+        <li class="li">Archive</li>
+      </a>
     </ul>
   </div>
   <div class="main-bar">
@@ -32,9 +37,12 @@
       <button class="filter">Filter</button>
     </div>
     <div class="section search">
-      <input type="text" placeholder="Search">
+      <form action="{% url 'UserHomepage' %}" method="GET" autocomplete="off">
+        {% csrf_token %}
+        <input type="text" placeholder="Search" name="search" id="user_search_input">
+      </form>
     </div>
-    <div class="section-table" style="margin: 0 25px 0 25px;" >
+    <div class="section-table" style="margin: 0 25px 0 25px;" id="table">
       <table class="table table-striped table-hover">
         <tr>
           <th>File Name</th>
@@ -47,16 +55,17 @@
         </tr>
         {% for file in files %}
         <tr>
-          
-          
+
+
           <td>{{file.file_name}}</td>
           <td>{{file.file_type}}</td>
           <td>{{file.uploader}}</td>
           <td>{{file.uploaded_date}}</td>
-          <td><button type="button" class="btn btn-success"><a href="{{file.file.url}}" target="blank" style="text-decoration: none; color: black;">VIEW</a></button></td>
-          <td><button type="button" class="btn btn-danger" onclick = "sweetalert()">DELETE</button></td>
+          <td><button type="button" class="btn btn-success"><a href="{{file.file.url}}" target="blank"
+                style="text-decoration: none; color: black;">VIEW</a></button></td>
+          <td><button type="button" class="btn btn-danger" onclick="sweetalert()">DELETE</button></td>
           <td><button type="button" class="btn btn-info">EDIT</button></td>
-          
+
         </tr>
         {% endfor %}
       </table>
@@ -65,7 +74,8 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -74,36 +84,38 @@
       </div>
       <form action="/uploadFile/" method="post" enctype="multipart/form-data" id="upload_form">
         {% csrf_token %}
-      <div class="modal-body">
-        <div class="row g-2">
-          <div class="col-md">
-            <div class="form-floating">
-              <input type="text" class="form-control" name="file_name" id="floatingInputGrid" placeholder="File Name" required>
-              <label for="floatingInputGrid">File Name</label>
-            </div>
-          </div>
-          <div class="col-md" style="margin-bottom: 10px;">
-            <div class="form-floating">
-                  <select class="form-select" id="floatingSelectGrid" name="file_type" aria-label="Floating label select example" form="upload_form" required>
-                    <option selected>Choose a file category</option>
-                    <option value="Audio">Audio</option>
-                    <option value="Video">Video</option>
-                    <option value="Image">Image</option>
-                    <option value="Text">Text</option>
-                  </select>
-                  <label for="floatingSelectGrid">File Category</label>
-                </div>
+        <div class="modal-body">
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-floating">
+                <input type="text" class="form-control" name="file_name" id="floatingInputGrid" placeholder="File Name"
+                  required>
+                <label for="floatingInputGrid">File Name</label>
               </div>
             </div>
-            <div class="mb-3">
-              <input class="form-control" type="file" id="formFile" name="file" required>
+            <div class="col-md" style="margin-bottom: 10px;">
+              <div class="form-floating">
+                <select class="form-select" id="floatingSelectGrid" name="file_type"
+                  aria-label="Floating label select example" form="upload_form" required>
+                  <option selected>Choose a file category</option>
+                  <option value="Audio">Audio</option>
+                  <option value="Video">Video</option>
+                  <option value="Image">Image</option>
+                  <option value="Text">Text</option>
+                </select>
+                <label for="floatingSelectGrid">File Category</label>
+              </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Upload</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div class="mb-3">
+            <input class="form-control" type="file" id="formFile" name="file" required>
           </div>
-    </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Upload</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

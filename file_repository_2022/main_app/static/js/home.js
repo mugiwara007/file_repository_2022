@@ -7,13 +7,13 @@ var btnList = lstContainer.getElementsByClassName("li");
 
 
 for (var i = 0; i < btnList.length; i++) {
-  btnList[i].addEventListener("click", function() {
+  btnList[i].addEventListener("click", function () {
     var current = document.getElementsByClassName("active");
     current[0].className = current[0].className.replace(" active", "");
     this.className += " active";
   });
 }
-function sweetalert(){
+function sweetalert() {
   Swal.fire({
     title: 'Are you sure?',
     icon: 'warning',
@@ -32,7 +32,7 @@ function sweetalert(){
   })
 }
 
-function deleteaccountalert(){
+function deleteaccountalert() {
   Swal.fire({
     title: 'Are you sure?',
     icon: 'warning',
@@ -50,7 +50,7 @@ function deleteaccountalert(){
     }
   })
 }
-function deleteuser(){
+function deleteuser() {
   Swal.fire({
     title: 'Are you sure you want to remove this User?',
     icon: 'warning',
@@ -68,7 +68,7 @@ function deleteuser(){
     }
   })
 }
-function deletefilepermanently(){
+function deletefilepermanently() {
   Swal.fire({
     title: 'Do you want to Delete this file permenantly?',
     icon: 'warning',
@@ -87,7 +87,7 @@ function deletefilepermanently(){
   })
 }
 
-function restorefile(){
+function restorefile() {
   Swal.fire({
     title: 'Do you want to Restore this file?',
     showDenyButton: true,
@@ -103,7 +103,7 @@ function restorefile(){
 }
 
 
-function deleteuserpermanently(){
+function deleteuserpermanently() {
   Swal.fire({
     title: 'Do you want to Delete this User permanently?',
     icon: 'warning',
@@ -122,12 +122,47 @@ function deleteuserpermanently(){
   })
 }
 
-function userClick(){
+function userClick() {
   document.getElementById('user-type').value = "User";
   console.log(document.getElementById('user-type').value);
 }
-function adminClick(){
+function adminClick() {
   document.getElementById('user-type').value = "Admin";
   console.log(document.getElementById('user-type').value);
 }
 
+$('#user_search_input').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/User/",
+    data: {
+      search: $('#user_search_input').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('have an error');
+    },
+  });
+});
+
+$('#admin_search_input').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/Admin/",
+    data: {
+      search: $('#admin_search_input').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('an error');
+    },
+  });
+});

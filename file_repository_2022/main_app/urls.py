@@ -8,18 +8,20 @@ urlpatterns = [
     path('Admin/', views.AdminHomepage, name='AdminHomepage'),
     path('User/', views.UserHomepage, name='UserHomepage'),
     path('UserProfile/', views.UserProfile, name='UserProfile'),
-    path('UserChangePassword/', views.UserChangePassword, name='UserChangePassword'),
+    path('UserChangePassword/', views.UserChangePassword,
+         name='UserChangePassword'),
     path('UserEditAccount/', views.UserEditAccount, name='UserEditAccount'),
     path('UserArchive/', views.UserArchive, name='UserArchive'),
     path('AdminProfile/', views.AdminProfile, name='AdminProfile'),
     path('AdminEditAccount/', views.AdminEditAccount, name='AdminEditAccount'),
-    path('AdminChangePassword/', views.AdminChangePassword, name='AdminChangePassword'),
+    path('AdminChangePassword/', views.AdminChangePassword,
+         name='AdminChangePassword'),
     path('AdminArchive/', views.AdminArchive, name='AdminArchive'),
     path('AdminUserTab/', views.AdminUserTab, name='AdminUserTab'),
     path('AdminFileArchive/', views.AdminFileArchive, name='AdminFileArchive'),
     path('AdminCreateUser/', views.AdminCreateUser, name='AdminCreateUser'),
     path('AdminEditUser/', views.AdminEditUser, name='AdminEditUser'),
-    
+
     path('uploadFile/', views.uploadFile, name='uploadFile'),
-    
+
 ]
