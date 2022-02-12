@@ -106,7 +106,10 @@ def register(request):
 
 
 def AdminHomepage(request):
-    user = Profiles.objects.get(id=request.session['logged_id'])
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
 
     # URL ACCESS REDIRECT
     if('logged_email' not in request.session):
@@ -131,7 +134,10 @@ def AdminHomepage(request):
 
 
 def UserHomepage(request):
-    user = Profiles.objects.get(id=request.session['logged_id'])
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
 
     if('logged_email' not in request.session):
         return render(request, 'index.html')
@@ -157,11 +163,15 @@ def UserHomepage(request):
 
 
 def UserProfile(request):
+    try:
+        profile = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     if('logged_email' not in request.session):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-    profile = Profiles.objects.get(id=request.session['logged_id'])
+    
     context = { 'username': profile.username,
                 'email': profile.eMail, 
                 'picture': profile.profile_picture,
@@ -178,8 +188,10 @@ def UserChangePassword(request):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-    found = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        found = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     if request.method == 'POST':
         errorCount=0
         if(found.password != request.POST['CurrentPass']):
@@ -204,8 +216,10 @@ def UserEditAccount(request):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-    profile = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        profile = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
 
     if request.method == 'POST':
         errorCount = 0
@@ -243,8 +257,10 @@ def UserArchive(request):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-    user = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     context = {'username': user.username, 'email': user.eMail,
                'profile_picture': user.profile_picture}
     return render(request, 'UserArchive.html', context)
@@ -255,8 +271,10 @@ def AdminProfile(request):
         return render(request, 'index.html')
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage')
-    user = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     context = {'username': user.username, 'email': user.eMail,
                'profile_picture': user.profile_picture}
     return render(request, 'AdminProfile.html', context)
@@ -267,8 +285,10 @@ def AdminEditAccount(request):
         return render(request, 'index.html')
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage')
-    admin = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        admin = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     if request.method == 'POST':
         errorCount = 0
         if(Profiles.objects.filter(username=request.POST['NewUserUsername']) and admin.username != request.POST['NewUserUsername']):
@@ -305,7 +325,10 @@ def AdminChangePassword(request):
         return render(request, 'index.html')
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage')
-    user = Profiles.objects.get(id=request.session['logged_id'])
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     if request.method == 'POST':
         errorCount=0
         if(user.password != request.POST['CurrentPass']):
@@ -332,8 +355,10 @@ def AdminArchive(request):
         return render(request, 'index.html')
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage')
-    user = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     archives = Archive.objects.all()
     context = {
         'username': user.username, 
@@ -348,8 +373,10 @@ def AdminUserTab(request):
         return render(request, 'index.html')
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage')
-    user = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     profiles = Profiles.objects.all()
 
     context = {'username': user.username, 'email': user.eMail,
@@ -372,8 +399,10 @@ def AdminFileArchive(request):
         return render(request, 'index.html')
     if(not request.session['logged_user_type']):
         return redirect('UserHomepage')
-    user = Profiles.objects.get(id=request.session['logged_id'])
-
+    try:
+        user = Profiles.objects.get(id=request.session['logged_id'])
+    except:
+        pass
     context = {'username': user.username, 'email': user.eMail,
                'profile_picture': user.profile_picture}
     return render(request, 'AdminFileArchive.html', context)
@@ -434,4 +463,3 @@ def permanent_delete_user(request):
     Archive.objects.filter(user_id=int(user_id)).delete()
     Profiles.objects.filter(id=user_id).delete()
     return redirect(request.META['HTTP_REFERER'])
-# hello world
