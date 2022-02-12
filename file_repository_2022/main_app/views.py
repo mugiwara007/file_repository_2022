@@ -8,6 +8,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from main_app.models import Profiles
 from main_app.models import UploadedFile
+from main_app.models import Archive
+
 
 import datetime
 
@@ -123,7 +125,7 @@ def UserHomepage(request):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-
+    # files = UploadedFile.objects.all()
     context = {
         'username': user.username,
         'email': user.eMail, 'profile_picture': user.profile_picture,
@@ -148,9 +150,10 @@ def UserProfile(request):
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
     profile = Profiles.objects.get(id=request.session['logged_id'])
-
     context = {'username': profile.username,
-               'email': profile.eMail, 'picture': profile.profile_picture}
+               'email': profile.eMail, 
+               'picture': profile.profile_picture,
+               }
     return render(request, 'UserProfile.html', context)
 
 
@@ -315,8 +318,12 @@ def AdminArchive(request):
         return redirect('UserHomepage')
     user = Profiles.objects.get(id=request.session['logged_id'])
 
-    context = {'username': user.username, 'email': user.eMail,
-               'profile_picture': user.profile_picture}
+    archives = Archive.objects.all()
+    context = {
+        'username': user.username, 
+        'email': user.eMail,
+        'profile_picture': user.profile_picture,
+        'archive_list':archives}
     return render(request, 'AdminArchive.html', context)
 
 
@@ -386,4 +393,29 @@ def uploadFile(request):
 
         return redirect('UserHomepage')
 
+def delete_user(request):
+    user_id = request.GET.get('user_id')
+    profile = Profiles.objects.get(id=int(user_id))
+    archive = Archive(
+                 username=profile.username,
+                 eMail=profile.eMail,
+                 password=profile.password,
+                 security_question=profile.security_question,
+                 security_answer=profile.security_answer,
+                 user_id=profile.id)
+    archive.save()
+    Profiles.objects.filter(id=user_id).update(archived=True)
+    return redirect(request.META['HTTP_REFERER'])
+
+def retrieve_user(request):
+    user_id = request.GET.get('user_id')
+    Archive.objects.filter(user_id=int(user_id)).delete()
+    Profiles.objects.filter(id=user_id).update(archived=False)
+    return redirect(request.META['HTTP_REFERER'])
+
+def permanent_delete_user(request):
+    user_id = request.GET.get('user_id')
+    Archive.objects.filter(user_id=int(user_id)).delete()
+    Profiles.objects.filter(id=user_id).delete()
+    return redirect(request.META['HTTP_REFERER'])
 # hello world

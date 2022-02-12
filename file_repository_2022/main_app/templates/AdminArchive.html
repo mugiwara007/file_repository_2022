@@ -33,11 +33,16 @@
           <th>Date Created</th>
           <th>DELETE USER ACCOUNT</th>
         </tr>
+        {% for archive in archive_list %}
         <tr>
-          <td>UserName</td>
+          <td>{{archive.username}}</td>
           <td>Date Created</td>
-          <td><button type="button" class="btn btn-danger" onclick="deleteuserpermanently()">DELETE</button></td>
+          <td>
+            <button type="button" class="btn btn-primary" onclick="restoreuser('{{archive.user_id}}')">Retrieve</button>
+            <button type="button" class="btn btn-danger" onclick="deleteuserpermanently('{{archive.user_id}}')">DELETE</button>
+          </td>
         </tr>
+        {% endfor %}
       </table>
     </div>
   </div>

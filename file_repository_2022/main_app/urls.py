@@ -23,5 +23,8 @@ urlpatterns = [
     path('AdminEditUser/', views.AdminEditUser, name='AdminEditUser'),
 
     path('uploadFile/', views.uploadFile, name='uploadFile'),
+    path('delete_user/', views.delete_user, name='delete_user'),
+    path('retrieve_user/', views.retrieve_user, name='retrieve_user'),
+    path('permanent_delete_user/', views.permanent_delete_user, name='permanent_delete_user'),
 
 ]

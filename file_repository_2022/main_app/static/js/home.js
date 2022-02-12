@@ -13,7 +13,7 @@ for (var i = 0; i < btnList.length; i++) {
     this.className += " active";
   });
 }
-function sweetalert() {
+function deletefile(file_id) {
   Swal.fire({
     title: 'Are you sure?',
     icon: 'warning',
@@ -57,9 +57,9 @@ function deleteaccountalert() {
     }
   })
 }
-function deleteuser() {
+function deleteuser(user_id) {
   Swal.fire({
-    title: 'Are you sure you want to remove this User?',
+    title: 'Are you sure you want to archive this User?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -69,9 +69,31 @@ function deleteuser() {
     if (result.isConfirmed) {
       Swal.fire(
         'Archived',
-        'This user has been sent to Archive',
+        'Done. Check this user in archive list.',
         'success'
-      )
+      ).then((result) => {
+        window.location.href = "../delete_user/" +  "?user_id=" + user_id
+      })
+    }
+  })
+}
+function restoreuser(user_id) {
+  Swal.fire({
+    title: 'Are you sure you want to retrieve this User?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Retrieve this User'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        'Restored',
+        'Done. Successfully Restored this User.',
+        'success'
+      ).then((result) => {
+        window.location.href = "../retrieve_user/" +  "?user_id=" + user_id
+      })
     }
   })
 }
@@ -110,7 +132,7 @@ function restorefile() {
 }
 
 
-function deleteuserpermanently() {
+function deleteuserpermanently(user_id) {
   Swal.fire({
     title: 'Do you want to Delete this User permanently?',
     icon: 'warning',
@@ -124,7 +146,10 @@ function deleteuserpermanently() {
         'Deleted',
         'This User has been Deleted Permanently',
         'success'
-      )
+      ).then((result) => {
+        window.location.href = "../permanent_delete_user/" +  "?user_id=" + user_id
+      })
+      
     }
   })
 }

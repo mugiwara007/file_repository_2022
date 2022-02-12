@@ -9,6 +9,7 @@ class Profiles(models.Model):
     security_question = models.CharField(max_length=100, null=False, blank=False)
     security_answer = models.CharField(max_length=100, null=False, blank=False)
     admin = models.BooleanField(default=False, null=False)
+    archived = models.BooleanField(default=False,null=False)
     id = models.BigAutoField(primary_key=True)
 
     def __str__(self):
@@ -20,3 +21,26 @@ class UploadedFile(models.Model):
     file_type = models.CharField(max_length=30, null=False, blank=False , default = 'file')
     uploader = models.CharField(max_length=30, null=False, blank=False)
     uploaded_date = models.CharField(max_length=30, null=False, blank=False , default = 'date')
+
+class Archive(models.Model):
+    profile_picture = models.ImageField(null=False, blank=True, default='user_profile.png')
+    username = models.CharField(max_length=30, null=False, blank=False)
+    eMail = models.CharField(max_length=30, null=False, blank=False)
+    password = models.CharField(max_length=30, null=False, blank=False)
+    security_question = models.CharField(max_length=100, null=False, blank=False)
+    security_answer = models.CharField(max_length=100, null=False, blank=False)
+    admin = models.BooleanField(default=False, null=False)
+    user_id = models.IntegerField(default='0')
+
+    def __str__(self):
+        return self.username
+
+class Archive(models.Model):
+    file = models.FileField()
+    file_name = models.CharField(max_length=30, null=False, blank=False)
+    file_type = models.CharField(max_length=30, null=False, blank=False , default = 'file')
+    uploader = models.CharField(max_length=30, null=False, blank=False)
+    uploaded_date = models.CharField(max_length=30, null=False, blank=False , default = 'date')
+
+    def __str__(self):
+        return self.file_name
