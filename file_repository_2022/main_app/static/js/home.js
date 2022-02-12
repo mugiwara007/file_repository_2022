@@ -217,7 +217,6 @@ $('#admin_user_search').on('keyup', function (e) {
   });
 });
 
-
 formlogout.addEventListener("click",function(event){
   event.preventDefault();
   Swal.fire({
@@ -234,3 +233,19 @@ formlogout.addEventListener("click",function(event){
     }
   })
 })
+
+function transferUserToArchive() {
+  Swal.fire({
+    title: 'Account Deletion',
+    text: "Are you sure you delete your account?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      document.getElementById("deleteuser").submit();
+    }
+  })
+}

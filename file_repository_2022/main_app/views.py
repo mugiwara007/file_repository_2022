@@ -6,7 +6,7 @@ from typing import Dict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from main_app.models import Profiles
+from main_app.models import Profiles,Archive
 from main_app.models import UploadedFile
 from main_app.models import Archive
 
@@ -32,6 +32,18 @@ def index(request):
 
         # Clear Log out session
         if('Logged-out' in request.POST):
+            if('accountDELETE' in request.POST):
+                arc = Profiles.objects.get(id=request.session['logged_id'])
+                userArchived = Archive(user_id=arc.id,
+                                        username=arc.username,
+                                        eMail=arc.eMail,
+                                        password = arc.password,
+                                        profile_picture = arc.profile_picture,
+                                        security_question = arc.security_question,
+                                        security_answer = arc.security_answer,
+                                        admin=arc.admin)
+                userArchived.save()
+                Profiles.objects.get(id=request.session['logged_id']).delete()
             del request.session['logged_username']
             del request.session['logged_email']
             del request.session['logged_id']
@@ -150,9 +162,13 @@ def UserProfile(request):
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
     profile = Profiles.objects.get(id=request.session['logged_id'])
-    context = {'username': profile.username,
-               'email': profile.eMail, 
-               'picture': profile.profile_picture,
+    context = { 'username': profile.username,
+                'email': profile.eMail, 
+                'picture': profile.profile_picture,
+                'password':profile.password,
+                'securityQ':profile.security_question,
+                'securityA':profile.security_question,
+                'id':profile.id,
                }
     return render(request, 'UserProfile.html', context)
 

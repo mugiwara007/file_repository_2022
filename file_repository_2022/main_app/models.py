@@ -35,7 +35,7 @@ class Archive(models.Model):
     def __str__(self):
         return self.username
 
-class Archive(models.Model):
+class ArchiveFile(models.Model):
     file = models.FileField()
     file_name = models.CharField(max_length=30, null=False, blank=False)
     file_type = models.CharField(max_length=30, null=False, blank=False , default = 'file')

@@ -1,6 +1,7 @@
 {% load static %}
 {% include 'AdminBase.html' %}
 {% block content %}
+<script src="{% static 'js/home.js' %}"></script>
 <div class="UserProfile-box">
     <form action="#">
         <div class="ProfileImage">
@@ -15,7 +16,7 @@
             <p>{{email}}</p>
         </div>
         <div class="UserProfileButtons">
-            <button type="button" class="btn btn-danger" onclick = "deleteaccountalert()">DELETE ACCOUNT</button>
+            <button type="button" class="btn btn-danger" id="deleteAccountButton" onclick="transferUserToArchive()">DELETE ACCOUNT</button>
         </div>
         <div class="UserProfileButtons">
             <a href="{% url 'UserEditAccount' %}"><button type="button" class="btn btn-primary">EDIT ACCOUNT</button></a>
@@ -27,7 +28,12 @@
             <a href="{% url 'UserHomepage' %}"><button type="button" class="btn btn-primary">CANCEL</button></a>
         </div>
     </form>
+    <form method="post" id="deleteuser" action="{% url 'index' %}" style="position: absolute;">
+        {% csrf_token %}
+        <input type="hidden" name="accountDELETE" value="{{id}}">
+        <input type="hidden" name="Logged-out" value="user-logged-out">
+    </form>
 </div>
-<script src="{% static 'js/home.js' %}"></script>
+
 {% include 'footer.html' %}
 {% endblock %}

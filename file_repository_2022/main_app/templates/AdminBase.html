@@ -31,7 +31,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
         </ul>
-        <form id="logoutform"action="{% url 'index' %}" method="POST">
+        <form id="logoutform" action="{% url 'index' %}" method="POST">
           {% csrf_token %}
           <input type="hidden" name="Logged-out" value="user-logged-out">
           <button type="submit" id="formlogout"class="btn btn-dark">LOG OUT</button>
