@@ -166,3 +166,21 @@ $('#admin_search_input').on('keyup', function (e) {
     },
   });
 });
+
+$('#admin_user_search').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/AdminUserTab/",
+    data: {
+      search: $('#admin_user_search').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('an error');
+    },
+  });
+});

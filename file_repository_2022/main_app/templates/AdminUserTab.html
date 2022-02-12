@@ -5,23 +5,32 @@
   <div class="side-bar">
     <div class="profile">
       <div class="image">
-        <a href="{% url 'AdminProfile' %}"><img src="{% static 'images/profile_pictures/' %}{{profile_picture}}" alt=""></a>
+        <a href="{% url 'AdminProfile' %}"><img src="{% static 'images/profile_pictures/' %}{{profile_picture}}"
+            alt=""></a>
       </div>
       <h3>Admin {{username}}</h3>
     </div>
     <ul id="myLIST" class="list">
-        <a id="AdminFiles" href="{% url 'AdminHomepage' %}"><li class="li">Files</li></a>
-        <a id="AdminFiles" href="{% url 'AdminFileArchive' %}"><li class="li">File Archive</li></a>
-        <a id="AdminUserTab" href="{% url 'AdminUserTab' %}"><li class="li active">Users</li></a>
-        <a id="AdminArchive" href="{% url 'AdminArchive' %}"><li class="li">Account Archive</li></a>
+      <a id="AdminFiles" href="{% url 'AdminHomepage' %}">
+        <li class="li">Files</li>
+      </a>
+      <a id="AdminFiles" href="{% url 'AdminFileArchive' %}">
+        <li class="li">File Archive</li>
+      </a>
+      <a id="AdminUserTab" href="{% url 'AdminUserTab' %}">
+        <li class="li active">Users</li>
+      </a>
+      <a id="AdminArchive" href="{% url 'AdminArchive' %}">
+        <li class="li">Account Archive</li>
+      </a>
     </ul>
   </div>
   <div class="main-bar">
     <div class="section upload">
-        <a href="{% url 'AdminCreateUser' %}">
-          <button class="upload-btn">+ Create User</button>
-        </a>
-      </div>
+      <a href="{% url 'AdminCreateUser' %}">
+        <button class="upload-btn">+ Create User</button>
+      </a>
+    </div>
     <div class="section fields">
       <input type="text" placeholder="File Name" required>
       <input type="text" placeholder="Uploader" required>
@@ -29,9 +38,12 @@
       <button class="filter">Filter</button>
     </div>
     <div class="section search">
-      <input type="text" placeholder="Search">
+      <form action="{% url 'AdminUserTab' %}" method="GET" autocomplete="off">
+        {% csrf_token %}
+        <input type="text" placeholder="Search" id="admin_user_search">
+      </form>
     </div>
-    <div class="section-table" style="margin: 0 25px 0 25px;" >
+    <div class="section-table" style="margin: 0 25px 0 25px;" id="table">
       <table class="table table-striped table-hover">
         <tr>
           <th>List of Users</th>
@@ -39,15 +51,17 @@
           <th>REMOVE USER ACCOUNT</th>
           <th>EDIT USER ACCOUNT</th>
         </tr>
+        {% for profile in profiles %}
         <tr>
-          <td>UserName</td>
+          <td>{{ profile.username }}</td>
           <td>Date Created</td>
           <td><button type="button" class="btn btn-danger" onclick="deleteuser()">DELETE</button></td>
           <td><a href="{% url 'AdminEditUser' %}"><button type="button" class="btn btn-primary">EDIT</button></a></td>
         </tr>
+        {% endfor %}
       </table>
     </div>
   </div>
 </div>
 {% include 'footer.html' %}
-{% endblock %}  
+{% endblock %}

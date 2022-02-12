@@ -14,7 +14,7 @@ import pytz
 from django.db.models import Q
 import json
 from django.template.loader import render_to_string
-from .utils import search
+from .utils import fileSearch, adminUserSearch
 # Create your views here.
 
 
@@ -93,10 +93,10 @@ def AdminHomepage(request):
 
     if is_ajax(request=request):
 
-        context['files'] = search(request)
+        context['files'] = fileSearch(request)
 
         data = {'rendered_table': render_to_string(
-            'table.html', context=context)}
+            'table_files.html', context=context)}
         return JsonResponse(data)
 
     return render(request, 'AdminHomepage.html', context)
@@ -118,10 +118,11 @@ def UserHomepage(request):
 
     if is_ajax(request=request):
 
-        context['files'] = search(request)
+        context['files'] = fileSearch(
+            request, request.session['logged_username'])
 
         data = {'rendered_table': render_to_string(
-            'table.html', context=context)}
+            'table_files.html', context=context)}
         return JsonResponse(data)
 
     return render(request, 'UserHomepage.html', context)
@@ -275,9 +276,21 @@ def AdminUserTab(request):
         return redirect('UserHomepage')
     user = Profiles.objects.get(id=request.session['logged_id'])
 
+    profiles = Profiles.objects.all()
+
     context = {'username': user.username, 'email': user.eMail,
-               'profile_picture': user.profile_picture}
-    return render(request, 'AdminUserTab.html', context)
+               'profile_picture': user.profile_picture,
+               'profiles': profiles}
+
+    if is_ajax(request=request):
+
+        context['profiles'] = adminUserSearch(request)
+
+        data = {'rendered_table': render_to_string(
+            'table_adminUser.html', context=context)}
+        return JsonResponse(data)
+
+    return render(request, 'AdminUserTab.html', context,)
 
 
 def AdminFileArchive(request):

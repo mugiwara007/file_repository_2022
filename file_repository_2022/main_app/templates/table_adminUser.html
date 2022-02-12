@@ -1,0 +1,16 @@
+<table class="table table-striped table-hover">
+    <tr>
+        <th>List of Users</th>
+        <th>Date Created</th>
+        <th>REMOVE USER ACCOUNT</th>
+        <th>EDIT USER ACCOUNT</th>
+    </tr>
+    {% for profile in profiles %}
+    <tr>
+        <td>{{ profile.username }}</td>
+        <td>Date Created</td>
+        <td><button type="button" class="btn btn-danger" onclick="deleteuser()">DELETE</button></td>
+        <td><a href="{% url 'AdminEditUser' %}"><button type="button" class="btn btn-primary">EDIT</button></a></td>
+    </tr>
+    {% endfor %}
+</table>
