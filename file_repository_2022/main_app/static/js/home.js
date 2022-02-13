@@ -72,7 +72,7 @@ function deleteuser(user_id) {
         'Done. Check this user in archive list.',
         'success'
       ).then((result) => {
-        window.location.href = "../delete_user/" +  "?user_id=" + user_id
+        window.location.href = "../delete_user/" + "?user_id=" + user_id
       })
     }
   })
@@ -92,7 +92,7 @@ function restoreuser(user_id) {
         'Done. Successfully Restored this User.',
         'success'
       ).then((result) => {
-        window.location.href = "../retrieve_user/" +  "?user_id=" + user_id
+        window.location.href = "../retrieve_user/" + "?user_id=" + user_id
       })
     }
   })
@@ -147,9 +147,9 @@ function deleteuserpermanently(user_id) {
         'This User has been Deleted Permanently',
         'success'
       ).then((result) => {
-        window.location.href = "../permanent_delete_user/" +  "?user_id=" + user_id
+        window.location.href = "../permanent_delete_user/" + "?user_id=" + user_id
       })
-      
+
     }
   })
 }
@@ -217,7 +217,7 @@ $('#admin_user_search').on('keyup', function (e) {
   });
 });
 
-formlogout.addEventListener("click",function(event){
+formlogout.addEventListener("click", function (event) {
   event.preventDefault();
   Swal.fire({
     title: 'Logout',
@@ -248,4 +248,24 @@ function transferUserToArchive() {
       document.getElementById("deleteuser").submit();
     }
   })
+}
+
+$(window).on('load', function () {
+  $('#id_start_date').get(0).setAttribute('type', 'date');
+
+  $('#id_file_type__icontains')
+    .replaceWith(
+      '<select id="id_file_type__icontains" name="file_type__icontains">' +
+      '<option value="" disabled selected>Select file category</option>' +
+      '<option value="audio">Audio</option>' +
+      '<option value="video">Video</option>' +
+      '<option value="image">Image</option>' +
+      '<option value="text">Text</option>' +
+      '</select>'
+    );
+
+})
+
+function clearform() {
+  document.getElementById("form_filter").reset();
 }

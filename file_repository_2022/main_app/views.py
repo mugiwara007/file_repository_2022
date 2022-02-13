@@ -6,7 +6,7 @@ from typing import Dict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
-from main_app.models import Profiles,Archive
+from main_app.models import Profiles, Archive
 from main_app.models import UploadedFile
 from main_app.models import Archive
 
@@ -19,6 +19,7 @@ from django.db.models import Q
 import json
 from django.template.loader import render_to_string
 from .utils import fileSearch, adminUserSearch
+from .filters import UserFileFilter, AdminFileFilter
 # Create your views here.
 
 
@@ -35,13 +36,13 @@ def index(request):
             if('accountDELETE' in request.POST):
                 arc = Profiles.objects.get(id=request.session['logged_id'])
                 userArchived = Archive(user_id=arc.id,
-                                        username=arc.username,
-                                        eMail=arc.eMail,
-                                        password = arc.password,
-                                        profile_picture = arc.profile_picture,
-                                        security_question = arc.security_question,
-                                        security_answer = arc.security_answer,
-                                        admin=arc.admin)
+                                       username=arc.username,
+                                       eMail=arc.eMail,
+                                       password=arc.password,
+                                       profile_picture=arc.profile_picture,
+                                       security_question=arc.security_question,
+                                       security_answer=arc.security_answer,
+                                       admin=arc.admin)
                 userArchived.save()
                 Profiles.objects.get(id=request.session['logged_id']).delete()
             del request.session['logged_username']
@@ -80,24 +81,24 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         try:
-            registerError=0
+            registerError = 0
             if(Profiles.objects.filter(eMail=request.POST['email'])):
                 messages.error(request, "Email already exist")
-                registerError+=1
+                registerError += 1
             if(Profiles.objects.filter(username=request.POST['userName'])):
                 messages.error(request, "Username already exist")
-                registerError+=1
+                registerError += 1
             if(request.POST['password'] != request.POST['c-password']):
                 messages.error(request, "Password does not match")
-                registerError+=1
+                registerError += 1
             if(registerError != 0):
                 return redirect('register')
             else:
                 p = Profiles(username=request.POST['userName'],
-                         eMail=request.POST['email'],
-                         password=request.POST['password'],
-                         security_question=request.POST['SQuestion'],
-                         security_answer=request.POST['SAnswer'], )
+                             eMail=request.POST['email'],
+                             password=request.POST['password'],
+                             security_question=request.POST['SQuestion'],
+                             security_answer=request.POST['SAnswer'], )
                 p.save()
                 return render(request, 'index.html')
         except:
@@ -118,9 +119,12 @@ def AdminHomepage(request):
         return redirect('UserHomepage')
 
     files = UploadedFile.objects.all()
+    fileFilter = AdminFileFilter(request.GET, queryset=files)
+    files = fileFilter.qs
+
     context = {'username': user.username, 'email': user.eMail,
                'profile_picture': user.profile_picture,
-               'files': files}
+               'files': files, 'fileFilter': fileFilter}
 
     if is_ajax(request=request):
 
@@ -143,11 +147,14 @@ def UserHomepage(request):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-    # files = UploadedFile.objects.all()
+    files = UploadedFile.objects.filter(
+        uploader__iexact=request.session['logged_username'])
+    fileFilter = UserFileFilter(request.GET, queryset=files)
+    files = fileFilter.qs
     context = {
         'username': user.username,
         'email': user.eMail, 'profile_picture': user.profile_picture,
-        'files':  UploadedFile.objects.filter(uploader__iexact=request.session['logged_username']),
+        'files':  files, 'fileFilter': fileFilter
     }
 
     if is_ajax(request=request):
@@ -171,14 +178,14 @@ def UserProfile(request):
         return render(request, 'index.html')
     if(request.session['logged_user_type']):
         return redirect('AdminHomepage')
-    
-    context = { 'username': profile.username,
-                'email': profile.eMail, 
-                'picture': profile.profile_picture,
-                'password':profile.password,
-                'securityQ':profile.security_question,
-                'securityA':profile.security_question,
-                'id':profile.id,
+
+    context = {'username': profile.username,
+               'email': profile.eMail,
+               'picture': profile.profile_picture,
+               'password': profile.password,
+               'securityQ': profile.security_question,
+               'securityA': profile.security_question,
+               'id': profile.id,
                }
     return render(request, 'UserProfile.html', context)
 
@@ -193,20 +200,20 @@ def UserChangePassword(request):
     except:
         pass
     if request.method == 'POST':
-        errorCount=0
+        errorCount = 0
         if(found.password != request.POST['CurrentPass']):
-            messages.error(request,"Wrong Current Password")
-            errorCount+=1
+            messages.error(request, "Wrong Current Password")
+            errorCount += 1
         if(request.POST['NewPass'] != request.POST['CNewPass']):
-            messages.error(request,"Password confirmation did not match")
-            errorCount+=1
-        if(errorCount==0):
+            messages.error(request, "Password confirmation did not match")
+            errorCount += 1
+        if(errorCount == 0):
             found.password = request.POST['NewPass']
             found.save()
             return redirect('UserProfile')
         else:
             return redirect('UserChangePassword')
-        
+
     context = {'picture': found.profile_picture}
     return render(request, 'UserChangePassword.html', context)
 
@@ -224,17 +231,17 @@ def UserEditAccount(request):
     if request.method == 'POST':
         errorCount = 0
         if(Profiles.objects.filter(username=request.POST['NewUserUsername']) and profile.username != request.POST['NewUserUsername']):
-            messages.error(request,"New Username already taken")
-            errorCount+=1
+            messages.error(request, "New Username already taken")
+            errorCount += 1
         if(Profiles.objects.filter(eMail=request.POST['NewUserEmail']) and profile.eMail != request.POST['NewUserEmail']):
-            messages.error(request,"New email already been used")
-            errorCount+=1
+            messages.error(request, "New email already been used")
+            errorCount += 1
         if(profile.password != request.POST['UserPassword']):
-            messages.error(request,"Wrong Password")
-            errorCount+=1
+            messages.error(request, "Wrong Password")
+            errorCount += 1
 
         # Data validation for existing accounts
-        if(errorCount==0):
+        if(errorCount == 0):
             profile.username = request.POST['NewUserUsername']
             profile.eMail = request.POST['NewUserEmail']
             profile.save()
@@ -245,7 +252,7 @@ def UserEditAccount(request):
             except:
                 pass
             return redirect('UserProfile')
-        
+
         return redirect('UserEditAccount')
     context = {'username': profile.username,
                'email': profile.eMail, 'picture': profile.profile_picture}
@@ -292,17 +299,17 @@ def AdminEditAccount(request):
     if request.method == 'POST':
         errorCount = 0
         if(Profiles.objects.filter(username=request.POST['NewUserUsername']) and admin.username != request.POST['NewUserUsername']):
-            messages.error(request,"New Username already taken")
-            errorCount+=1
+            messages.error(request, "New Username already taken")
+            errorCount += 1
         if(Profiles.objects.filter(eMail=request.POST['NewUserEmail']) and admin.eMail != request.POST['NewUserEmail']):
-            messages.error(request,"New email already been used")
-            errorCount+=1
+            messages.error(request, "New email already been used")
+            errorCount += 1
         if(admin.password != request.POST['UserPassword']):
-            messages.error(request,"Wrong Password")
-            errorCount+=1
+            messages.error(request, "Wrong Password")
+            errorCount += 1
 
         # Data validation for existing accounts
-        if(errorCount==0):
+        if(errorCount == 0):
             admin.username = request.POST['NewUserUsername']
             admin.eMail = request.POST['NewUserEmail']
             admin.save()
@@ -330,16 +337,15 @@ def AdminChangePassword(request):
     except:
         pass
     if request.method == 'POST':
-        errorCount=0
+        errorCount = 0
         if(user.password != request.POST['CurrentPass']):
-            messages.error(request,"Wrong Current Password")
-            errorCount+=1
+            messages.error(request, "Wrong Current Password")
+            errorCount += 1
         if(request.POST['NewPass'] != request.POST['CNewPass']):
-            messages.error(request,"Password confirmation did not match")
-            errorCount+=1
+            messages.error(request, "Password confirmation did not match")
+            errorCount += 1
 
-
-        if(errorCount==0):
+        if(errorCount == 0):
             user.password = request.POST['NewPass']
             user.save()
             return redirect('AdminProfile')
@@ -361,10 +367,10 @@ def AdminArchive(request):
         pass
     archives = Archive.objects.all()
     context = {
-        'username': user.username, 
+        'username': user.username,
         'email': user.eMail,
         'profile_picture': user.profile_picture,
-        'archive_list':archives}
+        'archive_list': archives}
     return render(request, 'AdminArchive.html', context)
 
 
@@ -438,25 +444,28 @@ def uploadFile(request):
 
         return redirect('UserHomepage')
 
+
 def delete_user(request):
     user_id = request.GET.get('user_id')
     profile = Profiles.objects.get(id=int(user_id))
     archive = Archive(
-                 username=profile.username,
-                 eMail=profile.eMail,
-                 password=profile.password,
-                 security_question=profile.security_question,
-                 security_answer=profile.security_answer,
-                 user_id=profile.id)
+        username=profile.username,
+        eMail=profile.eMail,
+        password=profile.password,
+        security_question=profile.security_question,
+        security_answer=profile.security_answer,
+        user_id=profile.id)
     archive.save()
     Profiles.objects.filter(id=user_id).update(archived=True)
     return redirect(request.META['HTTP_REFERER'])
+
 
 def retrieve_user(request):
     user_id = request.GET.get('user_id')
     Archive.objects.filter(user_id=int(user_id)).delete()
     Profiles.objects.filter(id=user_id).update(archived=False)
     return redirect(request.META['HTTP_REFERER'])
+
 
 def permanent_delete_user(request):
     user_id = request.GET.get('user_id')

@@ -30,17 +30,15 @@
       <button type="button" class="upload-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Upload</button>
     </div>
     <div class="section fields">
-      <input type="text" placeholder="File Name" required>
-      <select name="category" required>
-        <option value="" disabled selected>Select file category</option>
-        <option value="Audio">Audio</option>
-        <option value="Video">Video</option>
-        <option value="Image">Image</option>
-        <option value="Text">Text</option>
-      </select>
-      <input type="text" placeholder="Uploader" required>
-      <input type="date" placeholder="Date" required>
-      <button class="filter">Filter</button>
+      <form action="{% url 'AdminHomepage' %}" method="GET" id="form_filter">
+        <!-- {% csrf_token %} -->
+        {{fileFilter.form}}
+        <button class="filter"> <a href="{% url 'AdminHomepage' %}" style="text-decoration: none;color: white;"> Clear
+            Field</a></button>
+        <button class="filter">Filter</button>
+
+      </form>
+
     </div>
     <div class="section search">
       <form action="{% url 'UserHomepage' %}" method="GET" autocomplete="off">
@@ -121,4 +119,8 @@
   </div>
 </div>
 {% include 'footer.html' %}
+
+<script>
+ 
+</script>
 {% endblock %}
