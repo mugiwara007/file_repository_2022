@@ -268,8 +268,15 @@ def UserArchive(request):
         user = Profiles.objects.get(id=request.session['logged_id'])
     except:
         pass
-    context = {'username': user.username, 'email': user.eMail,
-               'profile_picture': user.profile_picture}
+    files = UploadedFile.objects.filter(
+        uploader__iexact=request.session['logged_username'])
+    fileFilter = UserFileFilter(request.GET, queryset=files)
+    files = fileFilter.qs
+    context = {
+        'username': user.username,
+        'email': user.eMail, 'profile_picture': user.profile_picture,
+        'files':  files, 'fileFilter': fileFilter
+    }
     return render(request, 'UserArchive.html', context)
 
 
@@ -409,8 +416,15 @@ def AdminFileArchive(request):
         user = Profiles.objects.get(id=request.session['logged_id'])
     except:
         pass
+
+    files = UploadedFile.objects.all()
+    fileFilter = AdminFileFilter(request.GET, queryset=files)
+    files = fileFilter.qs
+
     context = {'username': user.username, 'email': user.eMail,
-               'profile_picture': user.profile_picture}
+               'profile_picture': user.profile_picture,
+               'files': files, 'fileFilter': fileFilter}
+    
     return render(request, 'AdminFileArchive.html', context)
 
 

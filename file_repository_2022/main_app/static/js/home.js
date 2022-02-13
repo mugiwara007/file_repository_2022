@@ -251,6 +251,8 @@ function transferUserToArchive() {
 }
 
 $(window).on('load', function () {
+  $('#id_file_name__icontains').attr('placeholder', 'File Name')
+  $('#id_uploader__icontains').attr('placeholder', 'Uploader')
   $('#id_start_date').get(0).setAttribute('type', 'date');
 
   $('#id_file_type__icontains')
@@ -269,3 +271,8 @@ $(window).on('load', function () {
 function clearform() {
   document.getElementById("form_filter").reset();
 }
+
+$(document).ready(function () {
+  $('#m_table').dataTable({ searching: false, paging: false, info: false });
+  $('#m_table').DataTable();
+});

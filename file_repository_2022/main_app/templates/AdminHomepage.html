@@ -29,13 +29,15 @@
     <div class="section upload">
       <button type="button" class="upload-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">+ Upload</button>
     </div>
-    <div class="section fields">
+    <div class="section ">
       <form action="{% url 'AdminHomepage' %}" method="GET" id="form_filter">
-        <!-- {% csrf_token %} -->
+        {% csrf_token %}
         {{fileFilter.form}}
-        <button class="filter"> <a href="{% url 'AdminHomepage' %}" style="text-decoration: none;color: white;"> Clear
-            Field</a></button>
-        <button class="filter">Filter</button>
+        <div>
+          <button class="filter"> <a href="{% url 'AdminHomepage' %}" style="text-decoration: none;color: white;"> Clear
+              Field</a></button>
+          <button class="filter">Filter</button>
+        </div>
 
       </form>
 
@@ -47,31 +49,35 @@
       </form>
     </div>
     <div class="section-table" style="margin: 0 25px 0 25px;" id="table">
-      <table class="table table-striped table-hover">
-        <tr>
-          <th>File Name</th>
-          <th>Category</th>
-          <th>Uploader</th>
-          <th>Date</th>
-          <th>VIEW</th>
-          <th>ARCHIVE</th>
-          <th>EDIT</th>
-        </tr>
-        {% for file in files %}
-        <tr>
+      <table class="table table-striped table-hover" id="m_table">
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Category</th>
+            <th>Uploader</th>
+            <th>Date</th>
+            <th>VIEW</th>
+            <th>ARCHIVE</th>
+            <th>EDIT</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for file in files %}
+          <tr>
 
 
-          <td>{{file.file_name}}</td>
-          <td>{{file.file_type}}</td>
-          <td>{{file.uploader}}</td>
-          <td>{{file.uploaded_date}}</td>
-          <td><button type="button" class="btn btn-success"><a href="{{file.file.url}}" target="blank"
-                style="text-decoration: none; color: black;">VIEW</a></button></td>
-          <td><button type="button" class="btn btn-danger" onclick="sweetalert()">DELETE</button></td>
-          <td><button type="button" class="btn btn-info">EDIT</button></td>
+            <td>{{file.file_name}}</td>
+            <td>{{file.file_type}}</td>
+            <td>{{file.uploader}}</td>
+            <td>{{file.uploaded_date}}</td>
+            <td><button type="button" class="btn btn-success"><a href="{{file.file.url}}" target="blank"
+                  style="text-decoration: none; color: black;">VIEW</a></button></td>
+            <td><button type="button" class="btn btn-danger" onclick="sweetalert()">DELETE</button></td>
+            <td><button type="button" class="btn btn-info">EDIT</button></td>
 
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
@@ -120,7 +126,4 @@
 </div>
 {% include 'footer.html' %}
 
-<script>
- 
-</script>
 {% endblock %}

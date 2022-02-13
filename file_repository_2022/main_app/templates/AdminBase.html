@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="{% static 'css/home.css' %}">
   <script defer src="{% static 'js/home.js' %}" defer></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.css" />
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.4/datatables.min.js"></script>
 </head>
 
 <body>
@@ -34,7 +37,7 @@
         <form id="logoutform" action="{% url 'index' %}" method="POST">
           {% csrf_token %}
           <input type="hidden" name="Logged-out" value="user-logged-out">
-          <button type="submit" id="formlogout"class="btn btn-dark">LOG OUT</button>
+          <button type="submit" id="formlogout" class="btn btn-dark">LOG OUT</button>
         </form>
 
       </div>

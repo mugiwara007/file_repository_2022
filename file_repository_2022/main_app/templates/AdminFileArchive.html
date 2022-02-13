@@ -5,54 +5,66 @@
   <div class="side-bar">
     <div class="profile">
       <div class="image">
-        <a href="{% url 'AdminProfile' %}"><img src="{% static 'images/profile_pictures/' %}{{profile_picture}}" alt=""></a>
+        <a href="{% url 'AdminProfile' %}"><img src="{% static 'images/profile_pictures/' %}{{profile_picture}}"
+            alt=""></a>
       </div>
       <h3>Admin {{username}}</h3>
     </div>
     <ul id="myLIST" class="list">
-        <a id="AdminFiles" href="{% url 'AdminHomepage' %}"><li class="li">Files</li></a>
-        <a id="AdminFiles" href="{% url 'AdminFileArchive' %}"><li class="li active">File Archive</li></a>
-        <a id="AdminUserTab" href="{% url 'AdminUserTab' %}"><li class="li">Users</li></a>
-        <a id="AdminArchive" href="{% url 'AdminArchive' %}"><li class="li">Account Archive</li></a>
+      <a id="AdminFiles" href="{% url 'AdminHomepage' %}">
+        <li class="li">Files</li>
+      </a>
+      <a id="AdminFiles" href="{% url 'AdminFileArchive' %}">
+        <li class="li active">File Archive</li>
+      </a>
+      <a id="AdminUserTab" href="{% url 'AdminUserTab' %}">
+        <li class="li">Users</li>
+      </a>
+      <a id="AdminArchive" href="{% url 'AdminArchive' %}">
+        <li class="li">Account Archive</li>
+      </a>
     </ul>
   </div>
   <div class="main-bar">
-    <div class="section fields">
-      <input type="text" placeholder="File Name" required>
-      <select name="category" required>
-        <option value="" disabled selected>Select file category</option>
-        <option value="Audio">Audio</option>
-        <option value="Video">Video</option>
-        <option value="Image">Image</option>
-        <option value="Text">Text</option>
-      </select>
-      <input type="text" placeholder="Uploader" required>
-      <input type="date" placeholder="Date" required>
-      <button class="filter">Filter</button>
+    <div class="section ">
+      <form action="{% url 'AdminHomepage' %}" method="GET" id="form_filter">
+        {% csrf_token %}
+        {{fileFilter.form}}
+        <div>
+          <button class="filter"> <a href="{% url 'AdminHomepage' %}" style="text-decoration: none;color: white;"> Clear
+              Field</a></button>
+          <button class="filter">Filter</button>
+        </div>
+
+      </form>
     </div>
     <div class="section search">
       <input type="text" placeholder="Search">
     </div>
-    <div class="section-table" style="margin: 0 25px 0 25px;" >
-      <table class="table table-striped table-hover">
-        <tr>
+    <div class="section-table" style="margin: 0 25px 0 25px;">
+      <table class="table table-striped table-hover" id="m_table">
+        <thead>
+          <tr>
             <th>File Name</th>
             <th>Category</th>
             <th>Uploader</th>
             <th>Date</th>
             <th>DELETE</th>
-        </tr>
-        <tr>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
             <td>File Name</td>
             <td>File Category</td>
             <td>File Uploader</td>
             <td>Date Uploaded</td>
             <td><button type="button" class="btn btn-danger" onclick="deletefilepermanently()">DELETE</button></td>
           </tr>
-        </table>
+        </tbody>
+      </table>
       </table>
     </div>
   </div>
 </div>
 {% include 'footer.html' %}
-{% endblock %}  
+{% endblock %}

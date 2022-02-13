@@ -14,7 +14,6 @@ def fileSearch(request, user=''):
     search_query = searchQuery(request)
 
     if len(user) > 0:
-        print(user)
         files = UploadedFile.objects.filter(
             (Q(file__icontains=search_query) |
              Q(file_name__icontains=search_query) |
