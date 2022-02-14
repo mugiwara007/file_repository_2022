@@ -3,21 +3,21 @@
         <tr>
             <th>List of Users</th>
             <th>Date Created</th>
-            <th>REMOVE USER ACCOUNT</th>
-            <th>EDIT USER ACCOUNT</th>
+            <th>DELETE USER ACCOUNT</th>
         </tr>
     </thead>
     <tbody>
-        {% for profile in profiles %}
-        {% if profile.archived == False %}
+        {% for archive in archive_list %}
         <tr>
-            <td>{{ profile.username }}</td>
+            <td>{{archive.username}}</td>
             <td>Date Created</td>
-            <td><button type="button" class="btn btn-warning" onclick="deleteuser('{{profile.id}}')">ARCHIVE</button>
+            <td>
+                <button type="button" class="btn btn-primary"
+                    onclick="restoreuser('{{archive.user_id}}')">Retrieve</button>
+                <button type="button" class="btn btn-danger"
+                    onclick="deleteuserpermanently('{{archive.user_id}}')">DELETE</button>
             </td>
-            <td><a href="{% url 'AdminEditUser' %}"><button type="button" class="btn btn-primary">EDIT</button></a></td>
         </tr>
-        {% endif %}
         {% endfor %}
     </tbody>
 </table>

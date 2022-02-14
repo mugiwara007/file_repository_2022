@@ -6,6 +6,7 @@ from typing import Dict
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
+from main_app.models import ArchiveFile
 from main_app.models import Profiles, Archive
 from main_app.models import UploadedFile
 from main_app.models import Archive
@@ -18,8 +19,8 @@ import pytz
 from django.db.models import Q
 import json
 from django.template.loader import render_to_string
-from .utils import fileSearch, adminUserSearch
-from .filters import UserFileFilter, AdminFileFilter
+from .utils import *
+from .filters import UserFileFilter, AdminFileFilter, UserArchiveFileFilter, AdminArchiveFileFilter
 # Create your views here.
 
 
@@ -122,9 +123,16 @@ def AdminHomepage(request):
     fileFilter = AdminFileFilter(request.GET, queryset=files)
     files = fileFilter.qs
 
+    filter = {
+        'filename':request.GET.get('file_name__icontains'),
+        'filetype':request.GET.get('file_type__icontains'),
+        'uploader':request.GET.get('uploader__icontains'),
+        'date':request.GET.get('start_date')
+        }
+
     context = {'username': user.username, 'email': user.eMail,
                'profile_picture': user.profile_picture,
-               'files': files, 'fileFilter': fileFilter}
+               'files': files, 'fileFilter': fileFilter, 'filter':filter}
 
     if is_ajax(request=request):
 
@@ -268,15 +276,25 @@ def UserArchive(request):
         user = Profiles.objects.get(id=request.session['logged_id'])
     except:
         pass
-    files = UploadedFile.objects.filter(
+    files = ArchiveFile.objects.filter(
         uploader__iexact=request.session['logged_username'])
-    fileFilter = UserFileFilter(request.GET, queryset=files)
+    fileFilter = UserArchiveFileFilter(request.GET, queryset=files)
     files = fileFilter.qs
     context = {
         'username': user.username,
         'email': user.eMail, 'profile_picture': user.profile_picture,
         'files':  files, 'fileFilter': fileFilter
     }
+
+    if is_ajax(request=request):
+
+        context['files'] = fileArchiveSearch(
+            request, request.session['logged_username'])
+
+        data = {'rendered_table': render_to_string(
+            'table_files.html', context=context)}
+        return JsonResponse(data)
+
     return render(request, 'UserArchive.html', context)
 
 
@@ -378,6 +396,12 @@ def AdminArchive(request):
         'email': user.eMail,
         'profile_picture': user.profile_picture,
         'archive_list': archives}
+
+    if is_ajax(request=request):
+        context['archive_list'] = adminArchiveUserSearch(request)
+        data = {'rendered_table': render_to_string(
+            'table_adminArchiveUser.html', context=context)}
+        return JsonResponse(data)
     return render(request, 'AdminArchive.html', context)
 
 
@@ -417,14 +441,20 @@ def AdminFileArchive(request):
     except:
         pass
 
-    files = UploadedFile.objects.all()
-    fileFilter = AdminFileFilter(request.GET, queryset=files)
+    files = ArchiveFile.objects.all()
+    fileFilter = AdminArchiveFileFilter(request.GET, queryset=files)
     files = fileFilter.qs
 
     context = {'username': user.username, 'email': user.eMail,
                'profile_picture': user.profile_picture,
                'files': files, 'fileFilter': fileFilter}
-    
+
+    if is_ajax(request=request):
+        context['files'] = fileArchiveSearch(request)
+        data = {'rendered_table': render_to_string(
+            'table_files.html', context=context)}
+        return JsonResponse(data)
+
     return render(request, 'AdminFileArchive.html', context)
 
 

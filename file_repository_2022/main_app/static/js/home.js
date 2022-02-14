@@ -181,6 +181,24 @@ $('#user_search_input').on('keyup', function (e) {
   });
 });
 
+$('#user_file_archive').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/UserArchive/",
+    data: {
+      search: $('#user_file_archive').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('have an error');
+    },
+  });
+});
+
 $('#admin_search_input').on('keyup', function (e) {
   e.preventDefault();
 
@@ -207,6 +225,41 @@ $('#admin_user_search').on('keyup', function (e) {
     url: "/AdminUserTab/",
     data: {
       search: $('#admin_user_search').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('an error');
+    },
+  });
+});
+$('#admin_user_archive').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/AdminArchive/",
+    data: {
+      search: $('#admin_user_archive').val()
+    },
+    success: function (data) {
+      $('#table').html(data.rendered_table);
+    },
+    error: function (data) {
+      alert('an error');
+    },
+  });
+});
+
+$('#admin_file_archive').on('keyup', function (e) {
+  e.preventDefault();
+
+  $.ajax({
+    type: 'get',
+    url: "/AdminFileArchive/",
+    data: {
+      search: $('#admin_file_archive').val()
     },
     success: function (data) {
       $('#table').html(data.rendered_table);

@@ -24,9 +24,12 @@
       <button class="filter">Filter</button>
     </div> -->
     <div class="section search">
-      <input type="text" placeholder="Search">
+      <form action="{% url 'UserHomepage' %}" method="GET" autocomplete="off">
+        {% csrf_token %}
+        <input type="text" placeholder="Search" name="search" id="admin_user_archive">
+      </form>
     </div>
-    <div class="section-table" style="margin: 0 25px 0 25px;" >
+    <div class="section-table" style="margin: 0 25px 0 25px;" id="table">
       <table class="table table-striped table-hover" id="m_table">
         <thead>
           <tr>

@@ -27,11 +27,12 @@
   </div>
   <div class="main-bar">
     <div class="section ">
-      <form action="{% url 'AdminHomepage' %}" method="GET" id="form_filter">
+      <form action="{% url 'AdminFileArchive' %}" method="GET" id="form_filter">
         {% csrf_token %}
         {{fileFilter.form}}
         <div>
-          <button class="filter"> <a href="{% url 'AdminHomepage' %}" style="text-decoration: none;color: white;"> Clear
+          <button class="filter"> <a href="{% url 'AdminFileArchive' %}" style="text-decoration: none;color: white;">
+              Clear
               Field</a></button>
           <button class="filter">Filter</button>
         </div>
@@ -39,9 +40,12 @@
       </form>
     </div>
     <div class="section search">
-      <input type="text" placeholder="Search">
+      <form action="{% url 'UserHomepage' %}" method="GET" autocomplete="off">
+        {% csrf_token %}
+        <input type="text" placeholder="Search" name="search" id="admin_file_archive">
+      </form>
     </div>
-    <div class="section-table" style="margin: 0 25px 0 25px;">
+    <div class="section-table" style="margin: 0 25px 0 25px;" id="table">
       <table class="table table-striped table-hover" id="m_table">
         <thead>
           <tr>
@@ -53,13 +57,15 @@
           </tr>
         </thead>
         <tbody>
+          {% for file in files %}
           <tr>
-            <td>File Name</td>
-            <td>File Category</td>
-            <td>File Uploader</td>
-            <td>Date Uploaded</td>
+            <td>{{ file.file_name }}</td>
+            <td>{{ file.file_type }}</td>
+            <td>{{ file.uploader }}</td>
+            <td>{{ file.uploaded_date }}</td>
             <td><button type="button" class="btn btn-danger" onclick="deletefilepermanently()">DELETE</button></td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
       </table>
