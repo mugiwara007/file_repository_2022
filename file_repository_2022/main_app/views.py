@@ -516,3 +516,30 @@ def permanent_delete_user(request):
     Archive.objects.filter(user_id=int(user_id)).delete()
     Profiles.objects.filter(id=user_id).delete()
     return redirect(request.META['HTTP_REFERER'])
+
+def delete_file(request):
+    file_id = request.GET.get('file_id')
+    profile = UploadedFile.objects.get(file_id=int(file_id))
+    archive = ArchiveFile(
+        file=profile.file,
+        file_name=profile.file_name,
+        file_type=profile.file_type,
+        uploader=profile.uploader,
+        uploaded_date=profile.uploaded_date,
+        file_id=file_id
+        )
+    archive.save()
+    UploadedFile.objects.filter(file_id=file_id).update(archived=True)
+    return redirect(request.META['HTTP_REFERER'])
+
+def retrieve_file(request):
+    file_id = request.GET.get('file_id')
+    ArchiveFile.objects.filter(file_id=int(file_id)).delete()
+    UploadedFile.objects.filter(file_id=file_id).update(archived=False)
+    return redirect(request.META['HTTP_REFERER'])
+
+def permanent_delete_file(request):
+    file_id = request.GET.get('file_id')
+    ArchiveFile.objects.filter(file_id=int(file_id)).delete()
+    UploadedFile.objects.filter(file_id=file_id).delete()
+    return redirect(request.META['HTTP_REFERER'])

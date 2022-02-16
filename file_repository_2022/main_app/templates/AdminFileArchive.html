@@ -63,7 +63,10 @@
             <td>{{ file.file_type }}</td>
             <td>{{ file.uploader }}</td>
             <td>{{ file.uploaded_date }}</td>
-            <td><button type="button" class="btn btn-danger" onclick="deletefilepermanently()">DELETE</button></td>
+            <td>
+              <button type="button" class="btn btn-primary" onclick="restorefile('{{file.file_id}}')">Retrieve</button>
+              <button type="button" class="btn btn-danger" onclick="deletefilepermanently()">DELETE</button>
+            </td>
           </tr>
           {% endfor %}
         </tbody>

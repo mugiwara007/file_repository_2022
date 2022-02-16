@@ -20,7 +20,9 @@ class UploadedFile(models.Model):
     file_name = models.CharField(max_length=30, null=False, blank=False)
     file_type = models.CharField(max_length=30, null=False, blank=False , default = 'file')
     uploader = models.CharField(max_length=30, null=False, blank=False)
+    archived = models.BooleanField(default=False,null=False)
     uploaded_date = models.CharField(max_length=30, null=False, blank=False , default = 'date')
+    file_id = models.BigAutoField(primary_key=True)
 
 class Archive(models.Model):
     profile_picture = models.ImageField(null=False, blank=True, default='user_profile.png')
@@ -41,6 +43,7 @@ class ArchiveFile(models.Model):
     file_type = models.CharField(max_length=30, null=False, blank=False , default = 'file')
     uploader = models.CharField(max_length=30, null=False, blank=False)
     uploaded_date = models.CharField(max_length=30, null=False, blank=False , default = 'date')
+    file_id = models.IntegerField(default='0')
 
     def __str__(self):
         return self.file_name

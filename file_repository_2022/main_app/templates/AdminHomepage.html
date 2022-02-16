@@ -58,24 +58,22 @@
             <th>Date</th>
             <th>VIEW</th>
             <th>ARCHIVE</th>
-            <th>EDIT</th>
           </tr>
         </thead>
         <tbody>
           {% for file in files %}
+          {%  if file.archived == False %}
           <tr>
-
-
             <td>{{file.file_name}}</td>
             <td>{{file.file_type}}</td>
             <td>{{file.uploader}}</td>
             <td>{{file.uploaded_date}}</td>
             <td><button type="button" class="btn btn-success"><a href="{{file.file.url}}" target="blank"
                   style="text-decoration: none; color: black;">VIEW</a></button></td>
-            <td><button type="button" class="btn btn-danger" onclick="sweetalert()">DELETE</button></td>
-            <td><button type="button" class="btn btn-info">EDIT</button></td>
+            <td><button type="button" class="btn btn-danger" onclick="deletefile('{{file.file_id}}')">DELETE</button></td>
 
           </tr>
+          {% endif %}
           {% endfor %}
         </tbody>
       </table>

@@ -27,4 +27,8 @@ urlpatterns = [
     path('retrieve_user/', views.retrieve_user, name='retrieve_user'),
     path('permanent_delete_user/', views.permanent_delete_user, name='permanent_delete_user'),
 
+    path('delete_file/', views.delete_file, name='delete_file'),
+    path('retrieve_file/', views.retrieve_file, name='retrieve_file'),
+    path('permanent_delete_file/', views.permanent_delete_file, name='permanent_delete_file'),
+
 ]

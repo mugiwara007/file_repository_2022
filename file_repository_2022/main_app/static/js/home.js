@@ -27,7 +27,9 @@ function deletefile(file_id) {
         'Archived',
         'Your file has been sent to Archive.',
         'success'
-      )
+      ).then((result) => {
+        window.location.href = "../delete_file/" + "?file_id=" + file_id
+      })
     }
   })
 }
@@ -97,7 +99,7 @@ function restoreuser(user_id) {
     }
   })
 }
-function deletefilepermanently() {
+function deletefilepermanently(file_id) {
   Swal.fire({
     title: 'Do you want to Delete this file permenantly?',
     icon: 'warning',
@@ -111,12 +113,14 @@ function deletefilepermanently() {
         'Deleted',
         'This File has been Deleted Permanently',
         'success'
-      )
+      ).then((result) => {
+        window.location.href = "../permanent_delete_file/" + "?file_id=" + file_id
+      })
     }
   })
 }
 
-function restorefile() {
+function restorefile(file_id) {
   Swal.fire({
     title: 'Do you want to Restore this file?',
     showDenyButton: true,
@@ -124,7 +128,9 @@ function restorefile() {
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
-      Swal.fire('Restored!', '', 'success')
+      Swal.fire('Restored!', '', 'success').then((result) => {
+        window.location.href = "../retrieve_file/" + "?file_id=" + file_id
+      })
     } else if (result.isDenied) {
       Swal.fire('File not Restored', '', 'info')
     }
